@@ -1,0 +1,194 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.text-gradient {
+  text-shadow: 0px -1.439px 0px rgba(255, 255, 255, 0.25), 0px 1.439px 0px rgba(55, 126, 248, 0.65);
+  -webkit-text-stroke: 1px #404DC9;
+  font-family: JunkyardCalibo;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 28.8px */
+  letter-spacing: 0.48px;
+  background: linear-gradient(180deg, #FFF 0%, #FFF 12.5%, #EAF1FF 12.5%, #EAF1FF 25%, #D4E3FF 25%, #D4E3FF 37.5%, #BFD5FF 37.5%, #BFD5FF 50%, #AAC7FF 50%, #AAC7FF 62.5%, #95B9FF 62.5%, #95B9FF 75%, #7FABFF 75%, #7FABFF 87.5%, #6A9DFF 87.5%, #6A9DFF 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tab-text {
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.25);
+  -webkit-text-stroke: 1px #311909;
+  font-family: JunkyardCalibo;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 21px */
+  letter-spacing: 1px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.profile-name {
+  color: #F8EEEB;
+  text-shadow: 2px 2px 0px rgba(67, 67, 67, 0.55);
+  -webkit-text-stroke: 1.3px #3D2727;
+  font-family: JunkyardCalibo;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 95%; /* 15.2px */
+  letter-spacing: 0.16px;
+}
+
+.profile-tabs-header {
+  color: var(--Neutral-White, #FFFFE3);
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.25);
+  -webkit-text-stroke: 1px #2D1D0E;
+  font-family: JunkyardCalibo;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: 0.16px;
+}
+
+.profile-tabs-app-name {
+  color: #FDC840;
+  text-align: right;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.25);
+  -webkit-text-stroke: 1px #311909;
+  font-family: JunkyardCalibo;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 21px */
+  letter-spacing: 1px;
+}
+
+.edit-profile-label {
+  color: #FFFFE3;
+  text-align: left;
+  font-family: JunkyardCalibo;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 18px */
+  letter-spacing: 1px;
+}
+
+.edit-profile-save-button {
+  color: #FC8718;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.25);
+  -webkit-text-stroke: 1px #311909;
+  font-family: JunkyardCalibo;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 21px */
+  letter-spacing: 1px;
+}
+
+.feature-title {
+  color: #DD831A;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.25);
+  -webkit-text-stroke: 1.5px #311909;
+  font-family: JunkyardCalibo;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.feature-button-title {
+  color: #FFF;
+  text-shadow: 0.978px 0.978px 0px #55162B;
+  font-family: Silkscreen;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 120%; /* 19.2px */
+  letter-spacing: 0.32px;
+}
+
+.feature-point {
+  color: #FC8718;
+  text-align: center;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.25);
+  -webkit-text-stroke-width: 1.5;
+  -webkit-text-stroke-color: #311909;
+  font-family: JunkyardCalibo;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 21px */
+  letter-spacing: 1px;
+}
+.folder-title {
+  color: #DD831A;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.25);
+  -webkit-text-stroke: 1px #311909;
+  font-family: JunkyardCalibo;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 21px */
+  letter-spacing: 1px;
+}
+
+@keyframes slide-in {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-out {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+
+  .animate-slide-in {
+    animation: slide-in 0.3s ease-out forwards;
+  }
+
+  .animate-slide-out {
+    animation: slide-out 0.3s ease-in forwards;
+  }
