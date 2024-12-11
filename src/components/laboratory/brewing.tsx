@@ -1,4 +1,3 @@
-import { useState } from 'react';
 
 interface Props {
   redbar: number;
@@ -29,7 +28,7 @@ export default function Brewing({ redbar, bluebar, greenbar }: Props) {
   const greenLength = length(greenbar);
   return (
     <svg
-      width="480"
+      width="379"
       viewBox="0 0 379 123"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

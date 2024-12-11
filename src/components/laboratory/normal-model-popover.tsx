@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 'use client';
 
 import Image from 'next/image';
@@ -26,15 +25,15 @@ export default function NormalModelButton() {
     setIsOpen(false);
   };
   return (
-    <div className="relative h-[80px] w-[424px]">
+    <div className="relative h-[56px] w-[297px]">
       <Image
         src={normalmodelbutton}
         alt="normalmodelbutton"
-        height={80}
+        height={56}
         className="absolute select-none"
       />
       <div
-        className="relative z-10 flex h-full items-center justify-center gap-4 p-8 hover:cursor-pointer"
+        className="relative flex h-full items-center justify-center gap-4 hover:cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
         <svg
@@ -70,7 +69,9 @@ export default function NormalModelButton() {
           />
         </svg>
 
-        <p className="select-none font-silkscreen text-2xl">{option}</p>
+        <p className="select-none font-silkscreen text-[16px] text-white">
+          {option}
+        </p>
 
         <svg
           width="17"

@@ -18,14 +18,14 @@ const SilkScreen = localFont({
     {
       path: './fonts/Silkscreen-Bold.ttf',
       weight: '700',
-      style: 'normal',
+      style: 'bold',
     },
   ],
   variable: '--font-silk-screen',
 });
 
 const Junkyardcalibo = localFont({
-  src: './fonts/junkyardcalibo.ttf',
+  src: './fonts/JunkyardCalibo.ttf',
   variable: '--font-junkyard-calibo',
   weight: '400',
 });

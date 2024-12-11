@@ -30,3 +30,15 @@ body {
   -webkit-text-stroke-width: 1.5;
   -webkit-text-stroke-color: #404DC9;
 }
+
+.tab-text {
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.25);
+  -webkit-text-stroke-width: 1.5;
+  -webkit-text-stroke-color: #311909;
+  font-family: JunkyardCalibo;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 21px */
+  letter-spacing: 1px;
+}
