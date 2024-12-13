@@ -1,5 +1,4 @@
 import React from 'react';
-
 import PixelFrame from './pixel-frame';
 
 const Comment = ({
