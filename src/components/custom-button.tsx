@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { cva, type VariantProps } from "class-variance-authority";
 import React from "react";
 

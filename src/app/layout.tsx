@@ -7,6 +7,7 @@ import { Toaster } from 'react-hot-toast';
 
 // eslint-disable-next-line import/no-unresolved
 import bg from '@/assets/images/bg.svg';
+import { Suspense } from 'react';
 
 const SilkScreen = localFont({
   src: [
@@ -60,7 +61,7 @@ export default function RootLayout({
           objectPosition="center"
           className="z-0 select-none"
         />
-        {children}
+        <Suspense fallback={<div></div>}>{children}</Suspense>
         <Toaster />
       </body>
     </html>

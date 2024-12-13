@@ -14,6 +14,7 @@ interface Props {
   closeFolder: () => void;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function Folder({ folder, closeFolder, ...props }: Props) {
   const removeAppFromFolder = useItemStore(state => state.removeAppFromFolder);
   const handleDragEnd = (event: DragEndEvent) => {

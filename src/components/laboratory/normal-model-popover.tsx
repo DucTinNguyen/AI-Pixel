@@ -23,6 +23,7 @@ export default function NormalModelButton() {
   const buttonRef = useRef<HTMLDivElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleClickOutside = (event: any) => {
     // Check if the click is outside both the button and the popover
     if (

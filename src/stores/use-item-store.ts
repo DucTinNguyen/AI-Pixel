@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { Folder, Item } from '@/types';
+import { Item } from '@/types';
 
 interface ItemStore {
   items: Item[];
