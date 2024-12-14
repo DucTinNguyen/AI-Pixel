@@ -1,7 +1,7 @@
 // app/components/magical-video-player/page.tsx
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 export default function MagicalVideoPlayer() {
   const [videoUrl, setVideoUrl] = useState('')

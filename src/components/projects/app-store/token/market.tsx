@@ -185,7 +185,7 @@ const MagicMarket = () => {
         <div className={styles.filterBar}>
           <select
             value={marketFilter}
-            onChange={(e) => setMarketFilter(e.target.value as any)}
+            onChange={(e) => setMarketFilter(e.target.value as never)}
             className={styles.filterSelect}
           >
             <option value="all">All Types</option>
@@ -197,7 +197,7 @@ const MagicMarket = () => {
   
           <select
             value={rarityFilter}
-            onChange={(e) => setRarityFilter(e.target.value as any)}
+            onChange={(e) => setRarityFilter(e.target.value as never)}
             className={styles.filterSelect}
           >
             <option value="all">All Rarities</option>

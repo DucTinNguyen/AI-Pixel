@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { useState } from 'react';
 
 const EtherealCanvas = () => {
@@ -44,7 +45,7 @@ const EtherealCanvas = () => {
 
       <div className="bg-gray-800/50 rounded-lg p-4 border border-fuchsia-500/30 min-h-[200px] flex items-center justify-center">
         {image ? (
-          <img src={image} alt="Generated" className="max-w-full h-auto rounded-lg" />
+          <Image src={image} alt="Generated" className="max-w-full h-auto rounded-lg" />
         ) : (
           <div className="text-fuchsia-300 text-center">
             The canvas awaits your imagination...

@@ -22,7 +22,7 @@ const AudioExtractorApp: React.FC<AudioExtractorProps> = ({ className }) => {
 
   // Refs
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  // const videoRef = useRef<HTMLVideoElement | null>(null);
 
   // File size formatter
   const formatFileSize = (bytes: number): string => {
@@ -90,7 +90,7 @@ const AudioExtractorApp: React.FC<AudioExtractorProps> = ({ className }) => {
 
     // Simulate download
     try {
-      const fileName = videoFile.name.replace(/\.[^/.]+$/, '') + '.mp3';
+      // const fileName = videoFile.name.replace(/\.[^/.]+$/, '') + '.mp3';
       
       // In a real implementation, you would:
       // 1. Process the video file to extract audio
@@ -102,6 +102,7 @@ const AudioExtractorApp: React.FC<AudioExtractorProps> = ({ className }) => {
       setVideoFile(null);
       setVideoInfo(null);
     } catch (err) {
+      console.log(err)
       setError('Error extracting audio');
       setExtracting(false);
       setProgress(0);

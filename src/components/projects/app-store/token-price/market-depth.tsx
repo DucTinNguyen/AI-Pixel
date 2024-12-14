@@ -14,7 +14,7 @@ interface OrderBook {
 
 const MagicalMarketDepth = () => {
   const [orders, setOrders] = useState<OrderBook>({ bids: [], asks: [] });
-  const [selectedPotion, setSelectedPotion] = useState('PHX');
+  const [selectedPotion, ] = useState('PHX');
 
   const POTIONS: { [key: string]: { name: string; basePrice: number; unit: string } } = {
     PHX: {

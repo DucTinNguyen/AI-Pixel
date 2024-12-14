@@ -65,7 +65,7 @@ const AlchemistExchange: React.FC = () => {
   const [amount, setAmount] = useState<string>('');
   const [result, setResult] = useState<string>('');
   const [showSparkles, setShowSparkles] = useState<boolean>(false);
-  const [cauldronBubbles, setCauldronBubbles] = useState<boolean>(false);
+  const [, setCauldronBubbles] = useState<boolean>(false);
   const [magicOrbs, setMagicOrbs] = useState<MagicOrb[]>([]);
 
   useEffect(() => {

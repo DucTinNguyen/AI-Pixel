@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from 'react'
 type VisualizationPattern = 'runes' | 'crystals' | 'vortex' | 'waves'
 
 export default function SpellVisualizer() {
-  const [videoUrl, setVideoUrl] = useState('')
+  // const [videoUrl, setVideoUrl] = useState('')
   const [isPlaying, setIsPlaying] = useState(false)
   const [pattern, setPattern] = useState<VisualizationPattern>('runes')
   const [intensity, setIntensity] = useState(50)
@@ -15,9 +15,9 @@ export default function SpellVisualizer() {
   const animationRef = useRef<number>(0)
 
   // Handle visualization start
-  const handleStart = () => {
-    setIsPlaying(true)
-  }
+  // const handleStart = () => {
+  //   setIsPlaying(true)
+  // }
 
   // Function to draw runes pattern
   const drawRunes = (ctx: CanvasRenderingContext2D, time: number, frequencyData: Uint8Array) => {

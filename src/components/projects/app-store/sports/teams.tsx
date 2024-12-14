@@ -61,6 +61,7 @@ const TeamRivalryExplorer: React.FC = () => {
         setError('No matches found');
       }
     } catch (err) {
+      console.log(err)
       setError('Error fetching matches');
     } finally {
       setLoading(false);

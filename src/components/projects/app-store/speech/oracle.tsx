@@ -110,7 +110,7 @@ const MysticOracle = () => {
       {/* Interpretations */}
       {prophecies.length > 0 && (
         <div className="space-y-4">
-          <div className="text-amber-400">📖 The Oracle's Revelations:</div>
+          <div className="text-amber-400">📖 The Oracle&apos;s Revelations:</div>
           {prophecies.map((prophecy, index) => (
             <div 
               key={index}

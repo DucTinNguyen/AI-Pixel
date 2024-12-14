@@ -74,7 +74,7 @@ export default function MarketAlerts() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Alchemist's Market Watch</h1>
+      <h1 className={styles.title}>Alchemist&apos;s Market Watch</h1>
 
       <div className={styles.brewingStation}>
         <div className={styles.potionRow}>

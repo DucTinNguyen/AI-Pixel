@@ -16,7 +16,7 @@ export default function KingdomChronicles() {
   const [newMessage, setNewMessage] = useState('')
   const [viewerCount, setViewerCount] = useState(0)
   const [selectedQuality, setSelectedQuality] = useState('1080p')
-  const [showSettings, setShowSettings] = useState(false)
+  // const [showSettings, setShowSettings] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
   const chatEndRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
