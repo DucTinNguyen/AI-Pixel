@@ -19,10 +19,14 @@ import { ContentProps } from '@/types';
 
 import Comment from './comment';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { useConnectStore } from '@/stores/use-modal-connect';
+
+
 
 export default function Feature({ closeModal }: ContentProps) {
    const [isOpen, setIsOpen] = useState(false);
-   const { connect ,connected } = useWallet();
+   const { connected } = useWallet();
+   const { setConnectModal} = useConnectStore();
   const router = useRouter();
   const customStyles = {
     overlay: {
@@ -293,7 +297,7 @@ export default function Feature({ closeModal }: ContentProps) {
                       if(connected){
                         setIsOpen(true);
                       } else {
-                        connect();
+                        setConnectModal(true);
                       }
                     }}
                     className="relative flex h-[56px] w-[162.5px] items-center justify-center hover:scale-95"

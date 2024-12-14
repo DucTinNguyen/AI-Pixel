@@ -14,6 +14,7 @@
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/utilities": "^3.2.2",
+    "@headlessui/react": "^2.2.0",
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-react": "^0.15.35",
     "@solana/wallet-adapter-react-ui": "^0.9.35",
