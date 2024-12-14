@@ -32,6 +32,17 @@ import type { ContentProps, Item } from '@/types';
 import ModalConnectWallet from '@/components/connect-modal';
 import { useConnectStore } from '@/stores/use-modal-connect';
 import toast from 'react-hot-toast';
+import { Howl } from 'howler';
+import on from '@/assets/images/on.svg';
+import off from '@/assets/images/off.svg';
+
+export const sounds = {
+  background: new Howl({
+    src: ['/assets/sound/Magic.mp3'],
+    loop: true,
+    volume: 0.5,
+  }),
+};
 
 export default function Home() {
   const items = [
@@ -56,7 +67,7 @@ export default function Home() {
       href: '/ui-genius',
     },
   ];
-
+  const [isMuted, setIsMuted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [currentTab, setCurrentTab] = useState<string>();
   const searchParams = useSearchParams();
@@ -187,6 +198,10 @@ export default function Home() {
     return () => window.removeEventListener('resize', checkViewport);
   }, []);
 
+  useEffect(() => {
+    sounds.background.play();
+  }, []);
+
 
   return (
     <>
@@ -198,6 +213,34 @@ export default function Home() {
         className="relative min-h-screen items-center justify-items-center overflow-hidden font-silkscreen text-lg font-bold"
         onContextMenu={event => show({ event })}
       >
+        <button
+        onClick={() => {
+          setIsMuted(!isMuted);
+          if(isMuted) {
+            sounds.background.play();
+          } else {
+            sounds.background.stop();
+          }
+        }}
+        className='absolute bottom-[60px] right-[60px] w-[80px] h-[80px] md:block hidden cursor-pointer z-30'>
+          {
+            isMuted ? (
+              <Image
+                src={off}
+                alt="sound"
+                layout='fill'
+                objectFit='cover'
+              />
+            ) : (
+              <Image
+                src={on}
+                alt="mute"
+                layout='fill'
+                objectFit='cover'
+              />
+            )
+          }
+        </button>
         <div className="absolute min-h-screen w-full">
           {windows.map(window => (
             <Rnd
