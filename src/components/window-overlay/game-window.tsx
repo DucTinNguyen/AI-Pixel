@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import useItemStore from "@/stores/use-item-store";
 import useWindowStore from "@/stores/use-window-store";
 import { Item } from "@/types";
@@ -30,96 +29,77 @@ const GameWindow = ({ game, closeGame, windowId }: {
   const handleScreen = () => {};
   const handleSave = () => {};
 
+  // Calculate the width, ensuring minimum width
+  const windowWidth = Math.max(game.width ?? 700, 400);
+
   return (
     <div 
       style={{ 
-        width: (game.width ?? 700), 
-        height: (game.height ?? 700) + 100
+        width: windowWidth+40,
+        height: (game.height ?? 700) + 56
       }}
       className="relative"
     >
-      {/* Header */}
-      <div className="relative flex h-[56px] w-full items-center">
-        <Image
-          src={folderHeader}
-          alt="window header"
-          width={game.width ?? 700}
-          draggable={false}
-          className="drag-handle absolute inset-0 select-none"
-        />
-        <div className="folder-title drag-handle relative select-none pl-[18px]">
-          {game.name}
+      {/* Header - Made entirely draggable */}
+      <div className="relative flex h-[56px] w-full drag-handle">
+        {/* Background image container */}
+        <div className="absolute inset-0 w-full h-[56px] overflow-hidden pointer-events-none">
+          <img
+            src={folderHeader.src}
+            alt="window header"
+            className="w-full h-full object-cover"
+            draggable={false}
+          />
         </div>
-        <div className="absolute right-[9px] top-[9px] bottom-[5px] flex items-center gap-[8px]">
-          {/* Chat Button */}
-          <Image
-            src={folderChat}
-            alt="chat"
-            width={40}
-            draggable={false}
-            className="select-none hover:cursor-pointer"
-            onClick={handleChat}
-          />
-          {/* Share Button */}
-          <Image
-            src={folderShare}
-            alt="share"
-            width={40}
-            draggable={false}
-            className="select-none hover:cursor-pointer"
-            onClick={handleShare}
-          />
-          {/* Screen Button */}
-          <Image
-            src={folderScreen}
-            alt="screen"
-            width={40}
-            draggable={false}
-            className="select-none hover:cursor-pointer"
-            onClick={handleScreen}
-          />
-          {/* Save Button */}
-          <Image
-            src={folderSave}
-            alt="save"
-            width={40}
-            draggable={false}
-            className="select-none hover:cursor-pointer"
-            onClick={handleSave}
-          />
-          {/* Minimize Button */}
-          <Image
-            src={folderMinimize}
-            alt="minimize"
-            width={40}
-            draggable={false}
-            className="select-none hover:cursor-pointer"
-            onClick={(e) => {
-              e.stopPropagation();
-              minimizeWindow(windowId);
-            }}
-          />
-          {/* Close Button */}
-          <Image
-            src={folderClose}
-            alt="close"
-            width={40}
-            draggable={false}
-            className="select-none hover:cursor-pointer"
-            onClick={(e) => {
-              e.stopPropagation();
-              closeGame();
-            }}
-          />
+
+        {/* Title and buttons container */}
+        <div className="relative w-full flex items-center justify-between px-[18px] h-full">
+          {/* Title */}
+          <div className="select-none text-[#ffd700] font-silkscreen truncate max-w-[calc(100%-300px)] pointer-events-none">
+            {game.name}
+          </div>
+
+          {/* Buttons container - Override drag behavior */}
+          <div className="flex items-center gap-[8px] h-full py-[5px] pointer-events-auto">
+            <button className="w-[40px] h-[40px] flex items-center justify-center" onClick={handleChat}>
+              <img src={folderChat.src} alt="chat" className="select-none hover:cursor-pointer" draggable={false} />
+            </button>
+            <button className="w-[40px] h-[40px] flex items-center justify-center" onClick={handleShare}>
+              <img src={folderShare.src} alt="share" className="select-none hover:cursor-pointer" draggable={false} />
+            </button>
+            <button className="w-[40px] h-[40px] flex items-center justify-center" onClick={handleScreen}>
+              <img src={folderScreen.src} alt="screen" className="select-none hover:cursor-pointer" draggable={false} />
+            </button>
+            <button className="w-[40px] h-[40px] flex items-center justify-center" onClick={handleSave}>
+              <img src={folderSave.src} alt="save" className="select-none hover:cursor-pointer" draggable={false} />
+            </button>
+            <button 
+              className="w-[40px] h-[40px] flex items-center justify-center" 
+              onClick={(e) => {
+                e.stopPropagation();
+                minimizeWindow(windowId);
+              }}
+            >
+              <img src={folderMinimize.src} alt="minimize" className="select-none hover:cursor-pointer" draggable={false} />
+            </button>
+            <button 
+              className="w-[40px] h-[40px] flex items-center justify-center" 
+              onClick={(e) => {
+                e.stopPropagation();
+                closeGame();
+              }}
+            >
+              <img src={folderClose.src} alt="close" className="select-none hover:cursor-pointer" draggable={false} />
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Content area */}
       <div 
-        className="w-full h-full border-x-2 border-b-2 border-[#8b98b8] bg-[#192539]"
+        className="w-full border-x-2 border-b-2 border-[#8b98b8] bg-[#192539] overflow-y-auto"
         style={{ 
-          height: game.height ?? 700,
-          width: game.width ?? 700,
+          height: (game.height ?? 700)+40
         }}
       >
         {GameComponent ? (

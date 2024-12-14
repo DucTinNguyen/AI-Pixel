@@ -93,7 +93,7 @@ const MagicalMarket: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-[700px] h-[700px] overflow-auto bg-slate-900 text-white p-6 rounded-lg relative">
+    <div className="w-full max-w-[700px]  bg-slate-900 text-white p-6 rounded-lg relative">
       {/* Background Effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 animate-pulse rounded-lg" />
 

@@ -7,7 +7,17 @@ import modalbody from '@/assets/images/modal-body-custom-feature.svg';
 import modalclose from '@/assets/images/modal-close.svg';
 import modalheader from '@/assets/images/modal-header.svg';
 
-export default function CustomFeature() {
+interface Feature {
+  name: string;
+  value: boolean;
+}
+
+interface CustomFeatureProps {
+  features: Feature[];
+  setFeatures: (features: Feature[]) => void;
+}
+
+export default function CustomFeature({ features, setFeatures }: CustomFeatureProps) {
   const customStyles = {
     overlay: {
       backgroundColor: 'rgba(39, 39, 39, 0.60)',
@@ -23,70 +33,12 @@ export default function CustomFeature() {
   };
   const [isOpen, setIsOpen] = useState(false);
 
-  const [features, setFeatures] = useState([
-    {
-      name: 'AUTO',
-      value: false,
-    },
-    {
-      name: 'YOUTUBE DOWNLOADER',
-      value: false,
-    },
-    {
-      name: 'NORMAL MODEL',
-      value: false,
-    },
-    {
-      name: 'CITY GUESSER API',
-      value: true,
-    },
-    {
-      name: 'WEATHER API',
-      value: true,
-    },
-    {
-      name: 'STOCKS API',
-      value: false,
-    },
-    {
-      name: 'VIDEO/AUDIO API',
-      value: false,
-    },
-    {
-      name: 'BLOCKCHAIN TOKEN API',
-      value: true,
-    },
-    {
-      name: 'TOKEN PRICE API',
-      value: false,
-    },
-    {
-      name: 'SPEECH TO TEXT API',
-      value: false,
-    },
-    {
-      name: 'MAPS API',
-      value: false,
-    },
-    {
-      name: 'CURRENCY API',
-      value: false,
-    },
-    {
-      name: 'OCR ANALYZER',
-      value: false,
-    },
-    {
-      name: 'NEWS API',
-      value: false,
-    },
-  ]);
-
   function toggleFeature(index: number) {
     const newFeatures = [...features];
     newFeatures[index].value = !newFeatures[index].value;
     setFeatures(newFeatures);
   }
+
   return (
     <>
       <div
@@ -187,44 +139,48 @@ export default function CustomFeature() {
               />
             </div>
           </div>
-          <div className="relative grid w-[669px] grid-cols-2 gap-y-8 px-10 pt-20">
-            {features.map((feature, index) => (
-              <div key={feature.name} className="flex items-center gap-4">
-                <div
-                  className={`flex size-6 items-center justify-center border-[3px] hover:cursor-pointer ${feature.value ? 'border-[#FDC840]' : 'border-[#696969]'} `}
-                  onClick={() => toggleFeature(index)}
-                >
-                  {feature.value && (
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect width="14" height="14" fill="#FDC840" />
-                      <path d="M14 14H0L7 6L14 14Z" fill="#CB9C24" />
-                      <path
-                        d="M-1.56563e-06 14L-9.53674e-07 -3.0598e-07L7 6L-1.56563e-06 14Z"
-                        fill="#8B7231"
-                      />
-                      <path
-                        d="M14 8.34742e-08L14 14L7 6L14 8.34742e-08Z"
-                        fill="#FFDF8C"
-                      />
-                    </svg>
-                  )}
+          <div className="relative max-h-[420px] w-[669px] overflow-y-auto px-10 pt-20">
+            <div className="grid grid-cols-2 gap-6">
+              {features.map((feature, index) => (
+                <div key={feature.name} className="flex items-center gap-4">
+                  <div
+                    className={`flex h-6 w-6 items-center justify-center border-[3px] hover:cursor-pointer ${
+                      feature.value ? 'border-[#FDC840]' : 'border-[#696969]'
+                    } `}
+                    onClick={() => toggleFeature(index)}
+                  >
+                    {feature.value && (
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="14" height="14" fill="#FDC840" />
+                        <path d="M14 14H0L7 6L14 14Z" fill="#CB9C24" />
+                        <path
+                          d="M-1.56563e-06 14L-9.53674e-07 -3.0598e-07L7 6L-1.56563e-06 14Z"
+                          fill="#8B7231"
+                        />
+                        <path
+                          d="M14 8.34742e-08L14 14L7 6L14 8.34742e-08Z"
+                          fill="#FFDF8C"
+                        />
+                      </svg>
+                    )}
+                  </div>
+                  <p
+                    className="select-none font-silkscreen text-[16px] font-bold"
+                    style={{
+                      color: index === 0 ? '#FDC840' : '#FFFFFF',
+                    }}
+                  >
+                    {feature.name}
+                  </p>
                 </div>
-                <p
-                  className="select-none font-silkscreen text-[16px] font-bold"
-                  style={{
-                    color: index === 0 ? '#FDC840' : '#FFFFFF',
-                  }}
-                >
-                  {feature.name}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </Modal>

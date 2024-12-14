@@ -7,19 +7,71 @@ import modalbody from '@/assets/images/modal-body-laboratory.svg';
 import modalclose from '@/assets/images/modal-close.svg';
 import modalheader from '@/assets/images/modal-header.svg';
 import NormalModePopover from '@/components/laboratory/normal-model-popover';
+import CustomFeature from '@/components/laboratory/custom-feature';
 import useItemStore from '@/stores/use-item-store';
 import { ContentProps } from '@/types';
-
+import { AppComponents } from '../projects/app-store/apps';
 import Brewing from './brewing';
-import CustomFeature from './custom-feature';
-import { AppComponents, getApps } from '../projects/app-store/apps';
+
+// Feature to Apps mapping
+const featureToAppsMap: { [key: string]: string[] } = {
+  'AUTO': [], // Special case - includes all apps
+  'YOUTUBE DOWNLOADER': ['MagicalPlayer', 'VisualizerVideo', 'Chat', 'Capture'],
+  'NORMAL MODEL': ['AiChat', 'Transcribe', 'Vision', 'SpellGen'],
+  'CITY GUESSER API': ['CityGuesser', 'Distance', 'Time', 'Temple'],
+  'WEATHER API': ['WeatherDashboard', 'ForeCast', 'Alert', 'Map'],
+  'STOCKS API': ['Metrics', 'Watch', 'Mystic', 'PortFolio'],
+  'VIDEO/AUDIO API': ['VideoPlayer', 'AudioExtract', 'AudioRecorder', 'Visualizer'],
+  'BLOCKCHAIN TOKEN API': ['AlchemyLab', 'Dungeon', 'Market', 'Forge'],
+  'TOKEN PRICE API': ['PriceTracker', 'PriceChart', 'MarketDepth', 'TokenInfo'],
+  'SPEECH TO TEXT API': ['Speech', 'Oracle', 'Scribe', 'Crystal'],
+  'MAPS API': ['MapSearch', 'StreetTour', 'ScrollsLocation', 'Guide'],
+  'CURRENCY API': ['Exchange', 'MarketCurrency', 'Quest', 'Tax'],
+  'OCR ANALYZER': ['Scanner', 'Translator', 'Caster', 'Writer'],
+  'NEWS API': ['Dashboard', 'EventReport', 'Prophecy', 'Realm'],
+  'GAMES API': ['PointClick', 'MemoryGame', 'Snake', 'TicTacToe'],
+  'IMAGE API': ['Canvas', 'ForgeImage'],
+  'QR API': ['Sigil', 'Runic'],
+  'SPORTS API': ['Teams', 'Upcoming', 'Top', 'TeamSearch']
+};
+
+
+
+
+interface Feature {
+  name: string;
+  value: boolean;
+}
 
 export default function Laboratory({ closeModal }: ContentProps) {
   const [redbar, setRedbar] = useState(0);
   const [bluebar, setBluebar] = useState(0);
   const [greenbar, setGreenbar] = useState(0);
-
   const [appName, setAppName] = useState('');
+  
+  const [features, setFeatures] = useState<Feature[]>([
+    { name: 'AUTO', value: false },
+    { name: 'YOUTUBE DOWNLOADER', value: false },
+    { name: 'NORMAL MODEL', value: false },
+    { name: 'CITY GUESSER API', value: true },
+    { name: 'WEATHER API', value: true },
+    { name: 'STOCKS API', value: false },
+    { name: 'VIDEO/AUDIO API', value: false },
+    { name: 'BLOCKCHAIN TOKEN API', value: true },
+    { name: 'TOKEN PRICE API', value: false },
+    { name: 'SPEECH TO TEXT API', value: false },
+    { name: 'MAPS API', value: false },
+    { name: 'CURRENCY API', value: false },
+    { name: 'OCR ANALYZER', value: false },
+    { name: 'NEWS API', value: false },
+    { name: 'GAMES API', value: false },
+    { name: 'IMAGE API', value: false },
+    { name: 'QR API', value: false },
+    { name: 'SPORTS API', value: false }
+  ]);
+
+  const addApp = useItemStore(state => state.addApp);
+  const finishAddingApp = useItemStore(state => state.finishAddingApp);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -29,39 +81,65 @@ export default function Laboratory({ closeModal }: ContentProps) {
     }, 5000);
 
     return () => clearInterval(interval);
-  });
+  }, []);
 
-  const addApp = useItemStore(state => state.addApp);
-  const finishAddingApp = useItemStore(state => state.finishAddingApp);
-
-
-  /* integrate attempt 01 */
   const generateRandomApp = () => {
     const id = Date.now().toString();
     
-    // Get all component keys from the registry
-    const componentKeys = Object.keys(AppComponents);
+    // Get enabled features
+    const enabledFeatures = features.filter(f => f.value);
     
-    // Select a random component
-    const randomComponentKey = componentKeys[Math.floor(Math.random() * componentKeys.length)];
-    const selectedApp = AppComponents[randomComponentKey];
-    
-    const randomNumber = Math.floor(Math.random() * 8) + 1
+    if (enabledFeatures.length === 0) {
+      console.warn('No features enabled');
+      return;
+    }
 
-    addApp(
-      id,
-      appName,
-      `/assets/images/app${randomNumber}.svg`, 
-      randomComponentKey, // Store the component key for persistence
-      selectedApp.width,
-      selectedApp.height
-    );
-  
+    // If AUTO is enabled, select from all apps
+    if (enabledFeatures.find(f => f.name === 'AUTO')) {
+      const allApps = Object.keys(AppComponents);
+      const randomAppKey = allApps[Math.floor(Math.random() * allApps.length)];
+      const selectedApp = AppComponents[randomAppKey];
+      
+      const randomNumber = Math.floor(Math.random() * 8) + 1;
+      
+      addApp(
+        id,
+        appName || 'New App', // Provide default name if appName is empty
+        `/assets/images/app${randomNumber}.svg`,
+        randomAppKey,
+        selectedApp.width,
+        selectedApp.height
+      );
+    } else {
+      // Get apps from enabled features
+      const availableApps = enabledFeatures.flatMap(feature => 
+        featureToAppsMap[feature.name] || []
+      );
+      
+      if (availableApps.length === 0) {
+        console.warn('No apps available for selected features');
+        return;
+      }
+      
+      const randomAppKey = availableApps[Math.floor(Math.random() * availableApps.length)];
+      const selectedApp = AppComponents[randomAppKey];
+      
+      const randomNumber = Math.floor(Math.random() * 8) + 1;
+      
+      addApp(
+        id,
+        appName || 'New App', // Provide default name if appName is empty
+        `/assets/images/app${randomNumber}.svg`,
+        randomAppKey,
+        selectedApp.width,
+        selectedApp.height
+      );
+    }
+
     setTimeout(() => {
       finishAddingApp(id);
     }, 5000);
   };
-
 
   return (
     <AnimatePresence mode="wait">
@@ -109,15 +187,13 @@ export default function Laboratory({ closeModal }: ContentProps) {
                 value={appName}
                 onChange={e => setAppName(e.target.value)}
                 className="min-h-[349px] select-none border-[4px] border-[#8B98B8] bg-[#080F1A] p-6 font-silkscreen text-[16px] text-white placeholder-white outline-none"
-              ></textarea>
+              />
 
-              <CustomFeature />
+              <CustomFeature features={features} setFeatures={setFeatures} />
             </div>
             <div className="flex min-h-[429px] flex-col justify-between">
               <NormalModePopover />
-
               <Brewing redbar={redbar} bluebar={bluebar} greenbar={greenbar} />
-
               <Image
                 src={forgebutton}
                 alt="forgebutton"

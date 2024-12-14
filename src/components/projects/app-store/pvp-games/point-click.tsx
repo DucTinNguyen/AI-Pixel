@@ -73,7 +73,7 @@ const PointClickGame: React.FC = () => {
   }, [gameActive, isVisible, spawnNewDot]);
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-4 bg-gray-800">
       <div className="bg-gray-800 p-4 rounded-lg w-full max-w-md">
         <div className="flex justify-between text-white">
           <span>Bullets: {bullets}</span>
