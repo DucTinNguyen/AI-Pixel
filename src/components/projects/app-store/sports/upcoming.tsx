@@ -102,7 +102,7 @@ const UpcomingEvents: React.FC = () => {
   const groupedEvents = groupEventsByCategory(filteredEvents);
 
   return (
-    <div className="w-full max-w-[700px] h-[700px] overflow-auto bg-slate-900 text-white p-6 rounded-lg relative">
+    <div className="w-full max-w-[700px] bg-slate-900 text-white p-6 rounded-lg relative">
       {/* Background Effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 animate-pulse rounded-lg" />
 
@@ -186,9 +186,10 @@ const UpcomingEvents: React.FC = () => {
                     <div className="flex justify-between items-start mb-2">
                       <div className="flex items-center space-x-2">
                         {event.strLeagueBadge && (
-                          <Image 
+                          <img 
                             src={event.strLeagueBadge}
                             alt={event.strLeague}
+
                             className="w-6 h-6 object-contain"
                           />
                         )}

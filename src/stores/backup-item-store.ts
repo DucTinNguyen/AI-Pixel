@@ -1,39 +1,26 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { ComponentType } from 'react';
-import { Item } from '@/types';
-import { AppComponents } from '@/components/projects/app-store/apps';
 
-interface StoredItem extends Omit<Item, 'component'> {
-  componentKey?: string;
-}
+import { Item } from '@/types';
 
 interface ItemStore {
-  items: StoredItem[];
+  items: Item[];
   createFolder: (name: string) => void;
   deleteFolder: (id: string) => void;
   addAppToFolder: (folderId: string, appId: string) => void;
   removeAppFromFolder: (folderId: string, appId: string) => void;
   moveItemToLatest: (id: string) => void;
-  addApp: (
-    appId: string, 
-    name: string, 
-    appIcon: string, 
-    componentKey: string,
-    width?: number,
-    height?: number,
-  ) => void;
+  addApp: (appId: string, name: string, appIcon: string) => void;
   finishAddingApp: (appId: string) => void;
-  getComponent: (componentKey: string) => ComponentType | undefined;
+  // removeApp: (appId: string) => void;
 }
-
 const useItemStore = create(
   persist<ItemStore>(
     (set, get) => ({
       items: [],
       createFolder: (name: string) => {
         const items = get().items;
-        const newFolder: StoredItem = {
+        const newFolder: Item = {
           id: Date.now().toString(),
           name,
           type: 'FOLDER',
@@ -77,6 +64,7 @@ const useItemStore = create(
         const app = folder.apps!.find(app => app.id === appId);
         if (!app) return;
         folder.apps = folder.apps!.filter(app => app.id !== appId);
+        console.log('app', app);
         set({
           items: [
             ...items.filter(item => item.id !== folderId),
@@ -96,24 +84,14 @@ const useItemStore = create(
           items: [...items.filter(item => item.id !== id), item],
         });
       },
-      addApp: (
-        appId: string, 
-        name: string, 
-        appIcon: string, 
-        componentKey: string,
-        width?: number,
-        height?: number,
-      ) => {
+      addApp: (appId: string, name: string, appIcon: string) => {
         const items = get().items;
-        const newApp: StoredItem = {
+        const newApp: Item = {
           id: appId,
           name,
           type: 'GAME',
           appIcon,
           isCooking: true,
-          componentKey, 
-          width,
-          height
         };
         set({
           items: [...items, newApp],
@@ -128,13 +106,9 @@ const useItemStore = create(
           items: [...items.filter(item => item.id !== appId), app],
         });
       },
-
-      getComponent: (componentKey: string) => {
-        return componentKey ? AppComponents[componentKey]?.component : undefined;
-      },
     }),
     {
-      name: 'items',
+      name: 'items', // name of the item in the storage (must be unique)
     },
   ),
 );

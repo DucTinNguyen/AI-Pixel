@@ -119,7 +119,7 @@ const WeatherAlerts = () => {
   };
 
   return (
-    <div className="w-[320px] max-h-[400px] overflow-y-auto p-6 bg-[#2a2a4a] rounded-lg border-2 border-[#4a4a6a] relative">
+    <div className=" p-6 bg-[#2a2a4a] rounded-lg border-2 border-[#4a4a6a] relative">
       <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500 animate-shimmer" />
 
       <div className="flex justify-between items-center mb-4">

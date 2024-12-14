@@ -1,15 +1,17 @@
+import { ComponentType } from "react";
+
 export interface ContentProps {
   closeModal: () => void;
   setCurrentTab: (tab: string) => void;
 }
 
-export type Window = {
+export interface Window {
   id: number;
+  type: 'FOLDER' | 'GAME';
   zIndex: number;
   itemId: string;
-  type: 'FOLDER' | 'GAME';
-};
-
+  isMinimized: boolean;
+}
 export type Folder = {
   id: number;
   name: string;
@@ -27,4 +29,8 @@ export type Item = {
   type: 'FOLDER' | 'GAME';
   apps?: Item[];
   isCooking?: boolean;
+  component?: ComponentType;
+  componentKey?: string;
+  width?: number;
+  height?: number;
 };

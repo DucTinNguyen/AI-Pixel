@@ -141,10 +141,14 @@ export default function Home() {
   const addAppToFolder = useItemStore(state => state.addAppToFolder);
   const moveItemToLatest = useItemStore(state => state.moveItemToLatest);
 
+  /* ATP1 */
+  const openGame = useWindowStore(state => state.openGame); 
+
   function renderItem(item: Item) {
     if (item.type === 'FOLDER') {
       return <DesktopFolder item={item} />;
     } else if (item.type === 'GAME') {
+      
       return item.isCooking ? (
         <Image
           unoptimized={true}
@@ -165,18 +169,25 @@ export default function Home() {
                 objectFit="contain"
               />
             </div>
-            <span className="item-name max-w-[90px]">{item.name}</span>
-          </div>
-        </Draggable>
+        </div>
+          </Draggable>
       );
     }
   }
 
   const handleDragEnd = (event: DragEndEvent) => {
+    // Calculate the total drag distance using Pythagorean theorem
+    const dragDistance = Math.sqrt(
+      Math.pow(event.delta.x, 2) + Math.pow(event.delta.y, 2)
+    );
+    
+    // If dropping over a folder, add to folder regardless of drag distance
     if (event.over) {
       const folderId = event.over.id as string;
       addAppToFolder(folderId, event.active.id as string);
-    } else {
+    } 
+    // Only consider it a drag if distance is greater than item size (50px)
+    else if (dragDistance > 50) {
       moveItemToLatest(event.active.id as string);
     }
   };
@@ -451,3 +462,4 @@ function DesktopFolder({ item }: { item: Item }) {
     </>
   );
 }
+

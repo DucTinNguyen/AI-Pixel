@@ -79,7 +79,7 @@ export default function PortfolioPotions() {
   };
 
   return (
-    <div className="w-[700px] h-[700px] overflow-auto bg-slate-900 rounded-xl p-6 text-white relative overflow-hidden">
+    <div className="w-[700px] bg-slate-900 rounded-xl p-6 text-white relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900" />
       

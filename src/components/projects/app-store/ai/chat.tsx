@@ -30,7 +30,7 @@ const SoulEcho = () => {
   };
 
   return (
-    <div className="w-[700px] h-[700px] bg-gray-900 overflow-auto p-6 font-mono relative">
+    <div className="w-[700px] bg-gray-900  p-6 font-mono relative">
       <div className="absolute inset-0 border-4 border-purple-500/30 pointer-events-none" />
       
       {/* Header */}

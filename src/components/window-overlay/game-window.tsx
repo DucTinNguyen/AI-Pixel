@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import useItemStore from "@/stores/use-item-store";
 import useWindowStore from "@/stores/use-window-store";
 import { Item } from "@/types";
@@ -36,19 +35,19 @@ const GameWindow = ({ game, closeGame, windowId }: {
   return (
     <div 
       style={{ 
-        width: windowWidth,
+        width: windowWidth+40,
         height: (game.height ?? 700) + 56
       }}
-      className="relative min-w-[700px]"
+      className="relative"
     >
-      {/* Header */}
-      <div className="relative flex h-[56px] w-full">
+      {/* Header - Made entirely draggable */}
+      <div className="relative flex h-[56px] w-full drag-handle">
         {/* Background image container */}
-        <div className="absolute inset-0 w-full h-[56px] overflow-hidden">
+        <div className="absolute inset-0 w-full h-[56px] overflow-hidden pointer-events-none">
           <img
             src={folderHeader.src}
             alt="window header"
-            className="w-full "
+            className="w-full h-full object-cover"
             draggable={false}
           />
         </div>
@@ -56,12 +55,12 @@ const GameWindow = ({ game, closeGame, windowId }: {
         {/* Title and buttons container */}
         <div className="relative w-full flex items-center justify-between px-[18px] h-full">
           {/* Title */}
-          <div className="folder-title drag-handle select-none text-[#ffd700] font-silkscreen truncate max-w-[calc(100%-300px)]">
+          <div className="select-none text-[#ffd700] font-silkscreen truncate max-w-[calc(100%-300px)] pointer-events-none">
             {game.name}
           </div>
 
-          {/* Buttons container */}
-          <div className="flex items-center gap-[8px] h-full py-[5px]">
+          {/* Buttons container - Override drag behavior */}
+          <div className="flex items-center gap-[8px] h-full py-[5px] pointer-events-auto">
             <button className="w-[40px] h-[40px] flex items-center justify-center" onClick={handleChat}>
               <img src={folderChat.src} alt="chat" className="select-none hover:cursor-pointer" draggable={false} />
             </button>
@@ -98,9 +97,9 @@ const GameWindow = ({ game, closeGame, windowId }: {
 
       {/* Content area */}
       <div 
-        className="w-full border-x-2 border-b-2 border-[#8b98b8] bg-[#192539]"
+        className="w-full border-x-2 border-b-2 border-[#8b98b8] bg-[#192539] overflow-y-auto"
         style={{ 
-          height: game.height ?? 700
+          height: (game.height ?? 700)+40
         }}
       >
         {GameComponent ? (
