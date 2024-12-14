@@ -29,6 +29,7 @@ import useItemStore from '@/stores/use-item-store';
 import useWindowStore from '@/stores/use-window-store';
 import type { ContentProps, Item } from '@/types';
 
+
 export default function Home() {
   const items = [
     {
@@ -131,16 +132,18 @@ export default function Home() {
       return <DesktopFolder item={item} />;
     } else if (item.type === 'GAME') {
       return item.isCooking ? (
-        <Image unoptimized={true} src={cooking} alt="cooking" width={120} />
+        <div>
+          <Image unoptimized={true} src={cooking} alt="cooking" width={80} height={80} />
+        </div>
       ) : (
         <Draggable id={item.id}>
           <div className="flex flex-col items-center justify-center gap-4">
-            <div className="relative h-[50px] w-[50px]">
+            <div className="relative h-[60px] w-[60px]">
               <Image
                 src={item.appIcon!}
                 alt={item.name}
                 layout="fill"
-                objectFit="cover"
+                objectFit="contain"
               />
             </div>
             <span className="item-name max-w-[90px]">{item.name}</span>
