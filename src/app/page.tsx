@@ -28,6 +28,8 @@ import TabButton from '@/components/tab-button';
 import useItemStore from '@/stores/use-item-store';
 import useWindowStore from '@/stores/use-window-store';
 import type { ContentProps, Item } from '@/types';
+import Taskbar from '@/components/window-overlay/taskbar';
+import GameWindow from '@/components/window-overlay/game-window';
 
 export default function Home() {
   const items = [
@@ -126,74 +128,113 @@ export default function Home() {
   const addAppToFolder = useItemStore(state => state.addAppToFolder);
   const moveItemToLatest = useItemStore(state => state.moveItemToLatest);
 
+  /* ATP1 */
+  const openGame = useWindowStore(state => state.openGame); 
+
   function renderItem(item: Item) {
     if (item.type === 'FOLDER') {
       return <DesktopFolder item={item} />;
     } else if (item.type === 'GAME') {
+      
       return item.isCooking ? (
         <Image unoptimized={true} src={cooking} alt="cooking" width={120} />
       ) : (
-        <Draggable id={item.id}>
-          <div className="flex flex-col items-center justify-center gap-4">
-            <div className="relative h-[50px] w-[50px]">
-              <Image
-                src={item.appIcon!}
-                alt={item.name}
-                layout="fill"
-                objectFit="cover"
-              />
+        <div className="flex flex-col items-center hover:cursor-pointer">
+          <Draggable id={item.id}>
+            <div 
+              className="flex flex-col items-center justify-center gap-4"
+              onDoubleClick={() => openGame(item.id)}
+            >
+              <div className="relative h-[50px] w-[50px]">
+                <Image
+                  src={item.appIcon!}
+                  alt={item.name}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              </div>
+              <span className="item-name max-w-[90px]">{item.name}</span>
             </div>
-            <span className="item-name max-w-[90px]">{item.name}</span>
-          </div>
-        </Draggable>
+          </Draggable>
+        </div>
       );
     }
   }
 
   const handleDragEnd = (event: DragEndEvent) => {
+    // Calculate the total drag distance using Pythagorean theorem
+    const dragDistance = Math.sqrt(
+      Math.pow(event.delta.x, 2) + Math.pow(event.delta.y, 2)
+    );
+    
+    // If dropping over a folder, add to folder regardless of drag distance
     if (event.over) {
       const folderId = event.over.id as string;
       addAppToFolder(folderId, event.active.id as string);
-    } else {
+    } 
+    // Only consider it a drag if distance is greater than item size (50px)
+    else if (dragDistance > 50) {
       moveItemToLatest(event.active.id as string);
     }
   };
+
+  /* ATP1 */
 
   return (
     <div
       className="relative min-h-screen items-center justify-items-center overflow-hidden font-silkscreen text-lg font-bold"
       onContextMenu={event => show({ event })}
     >
-      <div className="absolute min-h-screen w-full">
-        {windows.map(window => (
-          <Rnd
-            key={window.id}
-            bounds="parent"
-            enableResizing={false}
-            default={{
-              x: 100,
-              y: 100,
-              width: window.type === 'FOLDER' ? 529 : 600,
-              height: window.type === 'FOLDER' ? 379 : 600,
-            }}
-            style={{
-              position: 'absolute',
-              zIndex: window.zIndex,
-            }}
-            onMouseDown={() => handleFocus(window.id)} // Bring to front on click
-            dragHandleClassName="drag-handle"
-          >
-            {window.type === 'FOLDER' && (
-              <Folder
-                folder={storedItems.find(item => item.id === window.itemId)!}
-                key={window.id}
-                closeFolder={() => closeWindow(window.id)}
-              />
-            )}
-          </Rnd>
-        ))}
+
+      {/* ATP 1 */}
+      <div className="absolute min-h-screen w-full pb-12"> {/* Add padding for taskbar */}
+        {windows.map(window => {
+          const item = storedItems.find(item => item.id === window.itemId);
+          if (!item) return null;
+
+          return (
+            <Rnd
+              key={window.id}
+              bounds="parent"
+              enableResizing={false}
+              default={{
+                x: 100,
+                y: 100,
+                width: window.type === 'FOLDER' ? 529 : 500,
+                height: window.type === 'FOLDER' ? 379 : 500,
+              }}
+              style={{
+                position: 'absolute',
+                zIndex: window.zIndex,
+                display: window.isMinimized ? 'none' : 'block',
+              }}
+              onMouseDown={() => handleFocus(window.id)}
+              dragHandleClassName="drag-handle"
+            >
+              {window.type === 'FOLDER' && (
+                <Folder
+                  folder={item}
+                  closeFolder={() => closeWindow(window.id)}
+                />
+              )}
+              {window.type === 'GAME' && (
+                <GameWindow
+                  game={item}
+                  closeGame={() => closeWindow(window.id)}
+                  windowId={window.id}
+                />
+              )}
+            </Rnd>
+          );
+        })}
+
       </div>
+
       <div className="absolute flex min-h-full w-full flex-col-reverse gap-10 pb-[60px] lg:gap-5 lg:pb-4">
+        {/* forged app minimized taskbar  */}
+        <Taskbar />
+        
+        {/* feature tabs - lab, market, orb */}
         <div className="flex justify-center gap-4">
           {tabs.map(tab => (
             <TabButton
@@ -213,6 +254,8 @@ export default function Home() {
             />
           ))}
         </div>
+
+
         <div
           className={`relative flex h-full flex-1 items-center justify-center ${isOpen ? '' : ''}`}
         >
@@ -239,6 +282,9 @@ export default function Home() {
               <span className="max-w-[90px] text-center">{item.title}</span>
             </Link>
           ))}
+
+
+          {/* forged apps */}
           {storedItems.map(item => (
             <div
               key={item.id}
@@ -254,6 +300,7 @@ export default function Home() {
           ))}
         </div>
       </DndContext>
+
       <div className="absolute right-[60px] space-y-4 pt-14 hover:cursor-pointer">
         <div className="flex justify-end">
           <Profile name="John woker" />
@@ -294,6 +341,8 @@ export default function Home() {
           </p>
         </div>
       </Menu>
+
+
     </div>
   );
 }
@@ -345,3 +394,4 @@ function DesktopFolder({ item }: { item: Item }) {
     </>
   );
 }
+

@@ -12,11 +12,14 @@ import { ContentProps } from '@/types';
 
 import Brewing from './brewing';
 import CustomFeature from './custom-feature';
+import { AppComponents, getApps } from '../projects/app-store/apps';
 
 export default function Laboratory({ closeModal }: ContentProps) {
   const [redbar, setRedbar] = useState(0);
   const [bluebar, setBluebar] = useState(0);
   const [greenbar, setGreenbar] = useState(0);
+
+  const [appName, setAppName] = useState('');
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -31,19 +34,34 @@ export default function Laboratory({ closeModal }: ContentProps) {
   const addApp = useItemStore(state => state.addApp);
   const finishAddingApp = useItemStore(state => state.finishAddingApp);
 
+
+  /* integrate attempt 01 */
   const generateRandomApp = () => {
     const id = Date.now().toString();
-    const randomNumber = Math.floor(Math.random() * 8) + 1;
+    
+    // Get all component keys from the registry
+    const componentKeys = Object.keys(AppComponents);
+    
+    // Select a random component
+    const randomComponentKey = componentKeys[Math.floor(Math.random() * componentKeys.length)];
+    const selectedApp = AppComponents[randomComponentKey];
+    
+    const randomNumber = Math.floor(Math.random() * 8) + 1
+
     addApp(
       id,
-      `Random App ${randomNumber}`,
-      `/assets/images/app${randomNumber}.svg`,
+      appName,
+      `/assets/images/app${randomNumber}.svg`, 
+      randomComponentKey, // Store the component key for persistence
+      selectedApp.width,
+      selectedApp.height
     );
-
+  
     setTimeout(() => {
       finishAddingApp(id);
     }, 5000);
   };
+
 
   return (
     <AnimatePresence mode="wait">
@@ -88,6 +106,8 @@ export default function Laboratory({ closeModal }: ContentProps) {
             <div className="flex w-[403px] flex-col justify-between gap-6">
               <textarea
                 placeholder="GREETINGS, WELCOME TO THE ALCHEMIST AI"
+                value={appName}
+                onChange={e => setAppName(e.target.value)}
                 className="min-h-[349px] select-none border-[4px] border-[#8B98B8] bg-[#080F1A] p-6 font-silkscreen text-[16px] text-white placeholder-white outline-none"
               ></textarea>
 

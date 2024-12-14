@@ -166,7 +166,7 @@ const AncientRuinsExplorer: React.FC = () => {
   };
 
   const getMapUrl = () => {
-    if (!currentSite) return '';
+    if (!currentSite) return undefined;
     
     if (viewMode === 'street') {
       return `https://www.google.com/maps/embed/v1/streetview` +
@@ -185,7 +185,7 @@ const AncientRuinsExplorer: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl bg-[#1a1c2e] text-[#e2c7ff] rounded-lg shadow-lg p-6">
+    <div className="w-[800px] max-w-4xl bg-[#1a1c2e] text-[#e2c7ff] rounded-lg shadow-lg p-6">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
           <span className="text-3xl">🏛️</span>

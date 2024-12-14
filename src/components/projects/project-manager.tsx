@@ -13,24 +13,6 @@ export const WindowManager: React.FC = () => {
 
   const apps = getApps();
 
-  // const openWindow = (app: App) => {
-  //   const windowSize = { width: 400, height: 300 };
-  //   const centerX = Math.max(0, (window.innerWidth - windowSize.width) / 2);
-  //   const centerY = Math.max(0, (window.innerHeight - windowSize.height) / 2);
-
-  //   const newWindow: Window = {
-  //     id: Date.now(),
-  //     title: app.title,
-  //     position: { x: centerX, y: centerY },
-  //     size: windowSize,
-  //     zIndex: windows.length,
-  //   };
-    
-  //   setWindows([...windows, newWindow]);
-  //   setActiveWindow(newWindow.id);
-  // };
-
-
   const openWindow = (app: App) => {
     // Calculate initial center position
     const centerX = Math.max(0, window.innerWidth / 2 - 200); // Use minimum width as fallback
