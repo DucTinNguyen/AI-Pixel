@@ -6,7 +6,7 @@ import { DndContext, type DragEndEvent } from '@dnd-kit/core';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Menu, useContextMenu } from 'react-contexify';
 import Modal from 'react-modal';
 import { Rnd } from 'react-rnd';
@@ -32,17 +32,19 @@ import type { ContentProps, Item } from '@/types';
 import ModalConnectWallet from '@/components/connect-modal';
 import { useConnectStore } from '@/stores/use-modal-connect';
 import toast from 'react-hot-toast';
-import { Howl } from 'howler';
 import on from '@/assets/images/on.svg';
 import off from '@/assets/images/off.svg';
+import Taskbar from '@/components/window-overlay/taskbar';
+import GameWindow from '@/components/window-overlay/game-window';
+import { sounds } from '@/utils/sounds';
 
-export const sounds = {
-  background: new Howl({
-    src: ['/assets/sound/Magic.mp3'],
-    loop: true,
-    volume: 0.5,
-  }),
-};
+// export const sounds = {
+//   background: new Howl({
+//     src: ['/assets/sound/Magic.mp3'],
+//     loop: true,
+//     volume: 0.5,
+//   }),
+// };
 
 export default function Home() {
   const items = [
@@ -133,7 +135,7 @@ export default function Home() {
   });
 
   const handleFocus = useWindowStore(state => state.handleFocus);
-  const { connectModal, setConnectModal} = useConnectStore();
+  const { connectModal, setConnectModal } = useConnectStore();
   const storedItems = useItemStore(state => state.items);
   const createFolder = useItemStore(state => state.createFolder);
   const openFolder = useWindowStore(state => state.openFolder);
@@ -142,13 +144,12 @@ export default function Home() {
   const moveItemToLatest = useItemStore(state => state.moveItemToLatest);
 
   /* ATP1 */
-  const openGame = useWindowStore(state => state.openGame); 
+  const openGame = useWindowStore(state => state.openGame);
 
   function renderItem(item: Item) {
     if (item.type === 'FOLDER') {
       return <DesktopFolder item={item} />;
     } else if (item.type === 'GAME') {
-      
       return item.isCooking ? (
         <Image
           unoptimized={true}
@@ -159,18 +160,24 @@ export default function Home() {
           className="md:h-[80px] h-[40px] w-[40px] md:w-[80px]"
         />
       ) : (
-        <Draggable id={item.id}>
-          <div className="flex flex-col items-center justify-center gap-4">
-            <div className="relative h-[40px] w-[40px] md:h-[60px] md:w-[60px]">
-              <Image
-                src={item.appIcon!}
-                alt={item.name}
-                layout="fill"
-                objectFit="contain"
-              />
+        <div className="flex flex-col items-center hover:cursor-pointer">
+          <Draggable id={item.id}>
+            <div 
+              className="flex flex-col items-center justify-center gap-4"
+              onDoubleClick={() => openGame(item.id)}
+            >
+              <div className="relative h-[40px] w-[40px] md:h-[60px] md:w-[60px]">
+                <Image
+                  src={item.appIcon!}
+                  alt={item.name}
+                  layout="fill"
+                  objectFit="contain"
+                />
+              </div>
+              <span className="item-name max-w-[90px]">{item.name}</span>
             </div>
-        </div>
           </Draggable>
+        </div>
       );
     }
   }
@@ -192,7 +199,7 @@ export default function Home() {
     }
   };
 
-  const handleConnectModal = (value : boolean) => {
+  const handleConnectModal = (value: boolean) => {
     setConnectModal(value);
   }
 
@@ -213,7 +220,6 @@ export default function Home() {
     sounds.background.play();
   }, []);
 
-
   return (
     <>
       <ModalConnectWallet
@@ -225,15 +231,15 @@ export default function Home() {
         onContextMenu={event => show({ event })}
       >
         <button
-        onClick={() => {
-          setIsMuted(!isMuted);
-          if(isMuted) {
-            sounds.background.play();
-          } else {
-            sounds.background.stop();
-          }
-        }}
-        className='absolute bottom-[60px] right-[60px] w-[80px] h-[80px] md:block hidden cursor-pointer z-30'>
+          onClick={() => {
+            setIsMuted(!isMuted);
+            if(isMuted) {
+              sounds.background.play();
+            } else {
+              sounds.background.stop();
+            }
+          }}
+          className='absolute bottom-[60px] right-[60px] w-[80px] h-[80px] md:block hidden cursor-pointer z-30'>
           {
             isMuted ? (
               <Image
@@ -252,36 +258,53 @@ export default function Home() {
             )
           }
         </button>
-        <div className="absolute min-h-screen w-full">
-          {windows.map(window => (
-            <Rnd
-              key={window.id}
-              bounds="parent"
-              enableResizing={false}
-              default={{
-                x: 100,
-                y: 100,
-                width: window.type === 'FOLDER' ? 529 : 600,
-                height: window.type === 'FOLDER' ? 379 : 600,
-              }}
-              style={{
-                position: 'absolute',
-                zIndex: window.zIndex,
-              }}
-              onMouseDown={() => handleFocus(window.id)} // Bring to front on click
-              dragHandleClassName="drag-handle"
-            >
-              {window.type === 'FOLDER' && (
-                <Folder
-                  folder={storedItems.find(item => item.id === window.itemId)!}
-                  key={window.id}
-                  closeFolder={() => closeWindow(window.id)}
-                />
-              )}
-            </Rnd>
-          ))}
+
+        <div className="absolute min-h-screen w-full pb-12">
+          {windows.map(window => {
+            const item = storedItems.find(item => item.id === window.itemId);
+            if (!item) return null;
+
+            return (
+              <Rnd
+                key={window.id}
+                bounds="parent"
+                enableResizing={false}
+                default={{
+                  x: 100,
+                  y: 100,
+                  width: window.type === 'FOLDER' ? 529 : 500,
+                  height: window.type === 'FOLDER' ? 379 : 500,
+                }}
+                style={{
+                  position: 'absolute',
+                  zIndex: window.zIndex,
+                  display: window.isMinimized ? 'none' : 'block',
+                }}
+                onMouseDown={() => handleFocus(window.id)}
+                dragHandleClassName="drag-handle"
+              >
+                {window.type === 'FOLDER' && (
+                  <Folder
+                    folder={item}
+                    closeFolder={() => closeWindow(window.id)}
+                  />
+                )}
+                {window.type === 'GAME' && (
+                  <GameWindow
+                    game={item}
+                    closeGame={() => closeWindow(window.id)}
+                    windowId={window.id}
+                  />
+                )}
+              </Rnd>
+            );
+          })}
         </div>
+
         <div className="absolute flex min-h-full w-full flex-col-reverse gap-10 pb-[60px] lg:gap-5 lg:pb-4">
+          {/* Taskbar */}
+          <Taskbar />
+          
           <div className="flex justify-center gap-4 z-30">
             {tabs.map(tab => (
               <TabButton
@@ -290,9 +313,8 @@ export default function Home() {
                 isOpen={tab.title === currentTab}
                 title={tab.title}
                 onClick={() => {
-                 if(isMobile) {
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    toast.custom((t: any) => (
+                  if(isMobile) {
+                    toast.custom((t: { visible: boolean }) => (
                       <div
                         className={` ${t.visible ? 'animate-slide-in' : 'animate-slide-out'} relative flex h-[64px] w-[390px] items-center gap-3 p-[14px]`}
                       >
@@ -314,8 +336,8 @@ export default function Home() {
                         />
                       </div>
                     ));
-                   return;
-                 } 
+                    return;
+                  } 
                   if (tab.title === currentTab) {
                     router.push('/');
                     setIsOpen(false);
@@ -329,14 +351,15 @@ export default function Home() {
               />
             ))}
           </div>
+
           <div
             className={`relative flex h-full flex-1 items-center justify-center ${isOpen ? '' : ''}`}
           >
             {renderContent()?.(sharedProps)}
-
             {currentTab === 'Feature' && renderFeature()}
           </div>
         </div>
+
         <DndContext id="desktop" onDragEnd={handleDragEnd}>
           <div className="absolute md:left-[60px] left-4 flex h-screen flex-col flex-wrap gap-[24.576px] gap-x-10 md:pt-14 pt-8">
             {items.map(item => (
@@ -370,6 +393,7 @@ export default function Home() {
             ))}
           </div>
         </DndContext>
+
         <div className="absolute right-[60px] hidden space-y-4 pt-14 hover:cursor-pointer md:block">
           <div className="flex justify-end">
             <Profile name="John woker" />
@@ -404,7 +428,7 @@ export default function Home() {
           <div
             className="inline-flex h-16 w-[250px] items-center justify-start gap-2.5 border-2 border-[#8b98b8] bg-[#192539] px-6 py-[19px] hover:cursor-pointer hover:bg-[#273854]"
             onClick={() => createFolder('FOLDER')}
-          >
+            >
             <p className="font-silkscreen text-base font-normal leading-tight tracking-tight text-[#99a0ae]">
               CREATE NEW FOLDER
             </p>
@@ -462,4 +486,3 @@ function DesktopFolder({ item }: { item: Item }) {
     </>
   );
 }
-
