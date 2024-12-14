@@ -35,8 +35,42 @@ const featureToAppsMap: { [key: string]: string[] } = {
   'SPORTS API': ['Teams', 'Upcoming', 'Top', 'TeamSearch']
 };
 
-
-
+// Keyword to Apps mapping
+const keywordToAppsMap: { [key: string]: string[] } = {
+  // Video/Audio related
+  'VIDEO': ['VideoPlayer', 'VisualizerVideo', 'AudioExtract', 'Visualizer'],
+  'AUDIO': ['AudioExtract', 'AudioRecorder', 'Visualizer', 'VideoPlayer'],
+  'YOUTUBE': ['MagicalPlayer', 'VisualizerVideo', 'Chat', 'Capture'],
+  'PLAYER': ['VideoPlayer', 'MagicalPlayer', 'AudioExtract'],
+  
+  // Finance related
+  'STOCK': ['Metrics', 'Watch', 'Mystic', 'PortFolio'],
+  'PRICE': ['PriceTracker', 'PriceChart', 'MarketDepth', 'TokenInfo'],
+  'MARKET': ['Market', 'MarketDepth', 'MarketCurrency'],
+  'TOKEN': ['AlchemyLab', 'TokenInfo', 'PriceTracker'],
+  'EXCHANGE': ['Exchange', 'MarketCurrency'],
+  
+  // Location related
+  'MAP': ['MapSearch', 'StreetTour', 'ScrollsLocation'],
+  'CITY': ['CityGuesser', 'Distance', 'Time'],
+  'WEATHER': ['WeatherDashboard', 'ForeCast', 'Alert'],
+  
+  // AI/ML related
+  'AI': ['AiChat', 'Vision', 'Speech'],
+  'CHAT': ['AiChat', 'Chat'],
+  'SPEECH': ['Speech', 'Oracle', 'Scribe'],
+  'VISION': ['Vision', 'Scanner', 'Canvas'],
+  
+  // Games related
+  'GAME': ['PointClick', 'MemoryGame', 'Snake', 'TicTacToe'],
+  'PLAY': ['PointClick', 'MemoryGame', 'Snake'],
+  
+  // Utility related
+  'SCAN': ['Scanner', 'Translator', 'Writer'],
+  'QR': ['Sigil', 'Runic'],
+  'NEWS': ['Dashboard', 'EventReport', 'Prophecy'],
+  'SPORTS': ['Teams', 'Upcoming', 'Top']
+};
 
 interface Feature {
   name: string;
@@ -83,58 +117,68 @@ export default function Laboratory({ closeModal }: ContentProps) {
     return () => clearInterval(interval);
   }, []);
 
+  const findMatchingAppsByKeyword = (inputText: string): string[] | null => {
+    // Convert input to uppercase for case-insensitive matching
+    const upperInput = inputText.toUpperCase();
+    
+    // Find the first matching keyword
+    for (const [keyword, apps] of Object.entries(keywordToAppsMap)) {
+      if (upperInput.includes(keyword)) {
+        return apps;
+      }
+    }
+    
+    return null;
+  };
+
   const generateRandomApp = () => {
     const id = Date.now().toString();
+    let availableApps: string[] = [];
     
-    // Get enabled features
-    const enabledFeatures = features.filter(f => f.value);
+    // First priority: Check for keyword matches in the app name
+    const keywordMatchedApps = findMatchingAppsByKeyword(appName);
     
-    if (enabledFeatures.length === 0) {
-      console.warn('No features enabled');
-      return;
-    }
-
-    // If AUTO is enabled, select from all apps
-    if (enabledFeatures.find(f => f.name === 'AUTO')) {
-      const allApps = Object.keys(AppComponents);
-      const randomAppKey = allApps[Math.floor(Math.random() * allApps.length)];
-      const selectedApp = AppComponents[randomAppKey];
-      
-      const randomNumber = Math.floor(Math.random() * 8) + 1;
-      
-      addApp(
-        id,
-        appName || 'New App', // Provide default name if appName is empty
-        `/assets/images/app${randomNumber}.svg`,
-        randomAppKey,
-        selectedApp.width,
-        selectedApp.height
-      );
+    if (keywordMatchedApps) {
+      availableApps = keywordMatchedApps;
     } else {
-      // Get apps from enabled features
-      const availableApps = enabledFeatures.flatMap(feature => 
-        featureToAppsMap[feature.name] || []
-      );
+      // Second priority: Use feature selection
+      const enabledFeatures = features.filter(f => f.value);
       
-      if (availableApps.length === 0) {
-        console.warn('No apps available for selected features');
+      if (enabledFeatures.length === 0) {
+        console.warn('No features enabled');
         return;
       }
-      
-      const randomAppKey = availableApps[Math.floor(Math.random() * availableApps.length)];
-      const selectedApp = AppComponents[randomAppKey];
-      
-      const randomNumber = Math.floor(Math.random() * 8) + 1;
-      
-      addApp(
-        id,
-        appName || 'New App', // Provide default name if appName is empty
-        `/assets/images/app${randomNumber}.svg`,
-        randomAppKey,
-        selectedApp.width,
-        selectedApp.height
-      );
+
+      // If AUTO is enabled, select from all apps
+      if (enabledFeatures.find(f => f.name === 'AUTO')) {
+        availableApps = Object.keys(AppComponents);
+      } else {
+        // Get apps from enabled features
+        availableApps = enabledFeatures.flatMap(feature => 
+          featureToAppsMap[feature.name] || []
+        );
+      }
     }
+    
+    if (availableApps.length === 0) {
+      console.warn('No apps available for selection');
+      return;
+    }
+    
+    // Select random app from available apps
+    const randomAppKey = availableApps[Math.floor(Math.random() * availableApps.length)];
+    const selectedApp = AppComponents[randomAppKey];
+    
+    const randomNumber = Math.floor(Math.random() * 8) + 1;
+    
+    addApp(
+      id,
+      appName || 'New App', // Provide default name if appName is empty
+      `/assets/images/app${randomNumber}.svg`,
+      randomAppKey,
+      selectedApp.width,
+      selectedApp.height
+    );
 
     setTimeout(() => {
       finishAddingApp(id);
