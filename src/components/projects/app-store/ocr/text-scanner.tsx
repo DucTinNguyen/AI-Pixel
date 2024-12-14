@@ -1,7 +1,6 @@
 'use client';
 
-import { error } from 'console';
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 interface TextScannerProps {
   className?: string;
