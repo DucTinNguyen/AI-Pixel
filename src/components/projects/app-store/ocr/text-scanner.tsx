@@ -1,5 +1,6 @@
 'use client';
 
+import { error } from 'console';
 import React, { useState, useRef } from 'react';
 
 interface TextScannerProps {
@@ -68,6 +69,7 @@ const TextScannerApp: React.FC<TextScannerProps> = ({ className = '' }) => {
         confidence: 99
       }
     } catch (error) {
+      console.log(error)
       throw new Error('Failed to process image');
     }
   };
@@ -86,6 +88,7 @@ const TextScannerApp: React.FC<TextScannerProps> = ({ className = '' }) => {
         timestamp: Date.now()
       });
     } catch (err) {
+      console.log(err)
       setError('Error processing image');
     } finally {
       setIsScanning(false);
@@ -124,7 +127,7 @@ const TextScannerApp: React.FC<TextScannerProps> = ({ className = '' }) => {
     <div className={`min-w-[320px] min-h-[400px] bg-[#1a1a2e] border-2 border-[#6b21a8]/30 rounded-lg overflow-hidden shadow-lg ${className}`}>
       <div className="p-4 bg-[#1a1a2e] border-b border-[#6b21a8]/20 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h2 className="text-[#ffd700] font-mono text-lg">Alchemist's Scanner</h2>
+          <h2 className="text-[#ffd700] font-mono text-lg">Alchemist&apos;s Scanner</h2>
           <span className="text-[#a855f7] text-xs">
             Last Enchanted: {new Date().toLocaleTimeString()}
           </span>
