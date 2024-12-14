@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { useState } from 'react';
 
 const VisionWeaver = () => {
@@ -66,7 +67,7 @@ const VisionWeaver = () => {
       <div className="grid grid-cols-2 gap-4">
         {imagePath && (
           <div className="bg-gray-800/50 rounded-lg p-4 border border-cyan-500/30">
-            <img 
+            <Image 
               src={imagePath} 
               alt="Preview" 
               className="w-full h-auto rounded"

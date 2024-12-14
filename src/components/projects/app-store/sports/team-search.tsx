@@ -41,6 +41,7 @@ const AlchemicalTeamSearch = () => {
         setError('⚠️ No team found in the ancient scrolls');
       }
     } catch (err) {
+      console.log(err)
       setError('⚠️ The magical connection failed');
     } finally {
       setIsLoading(false);

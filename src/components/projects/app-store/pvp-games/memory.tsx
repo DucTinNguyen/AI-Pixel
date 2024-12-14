@@ -1,6 +1,6 @@
 "use client";
 // src/apps/MemoryGame.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const COLORS = ['red', 'blue', 'green', 'yellow'];
 
@@ -21,7 +21,7 @@ const MemoryGame: React.FC = () => {
 
   const playSequence = async (currentSequence: string[]) => {
     setIsPlaying(true);
-    for (let color of currentSequence) {
+    for (const color of currentSequence) {
       await new Promise(resolve => setTimeout(resolve, 500));
       const el = document.getElementById(color);
       el?.classList.add('opacity-50');

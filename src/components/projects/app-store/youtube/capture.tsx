@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react';
 
 interface SpellEffect {
   element: string;
@@ -134,8 +134,8 @@ export default function SpellTranslator() {
                 <div className="space-y-2 text-purple-300">
                   <p>Duration: {spell.duration}</p>
                   <p className="italic text-sm">
-                    "A {spell.duration.toLowerCase()} {spell.effect.toLowerCase()} of 
-                    {spell.element.toLowerCase()} energy that manifests with {spell.power.toLowerCase()} force."
+                    &quot;A {spell.duration.toLowerCase()} {spell.effect.toLowerCase()} of 
+                    {spell.element.toLowerCase()} energy that manifests with {spell.power.toLowerCase()} force.&quot;
                   </p>
                 </div>
 

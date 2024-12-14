@@ -40,6 +40,7 @@ const VoiceRecorderApp: React.FC<VoiceRecorderProps> = ({ className }) => {
   // Initialize audio analyzer for visualizing audio levels
   const initializeAudioAnalyzer = async (stream: MediaStream) => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
       analyzerRef.current = audioContextRef.current.createAnalyser();
       analyzerRef.current.fftSize = 256;

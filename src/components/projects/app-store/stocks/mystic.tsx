@@ -43,7 +43,7 @@ export const SpellIcon = () => (
 export default function MysticMetrics() {
   const [selectedSpell, setSelectedSpell] = useState('price');
   const [data, setData] = useState<number[]>([]);
-  const [magicPower, setMagicPower] = useState(0);
+  const [, setMagicPower] = useState(0);
 
   const spells = [
     { id: 'price', name: 'Price Scrying', icon: CrystalIcon },

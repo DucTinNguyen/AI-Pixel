@@ -2,17 +2,17 @@
 
 import React, { useState } from 'react';
 
-interface SearchResult {
-  name: string;
-  rating: number;
-  address: string;
-  isOpen: boolean;
-  type: 'library' | 'bookstore';
-}
+// interface SearchResult {
+//   name: string;
+//   rating: number;
+//   address: string;
+//   isOpen: boolean;
+//   type: 'library' | 'bookstore';
+// }
 
-interface MagicalScrollFinderProps {
-  apiKey: string;
-}
+// interface MagicalScrollFinderProps {
+//   apiKey: string;
+// }
 
 const MagicalScrollFinder: React.FC = () => {
   const [city, setCity] = useState<string>('');

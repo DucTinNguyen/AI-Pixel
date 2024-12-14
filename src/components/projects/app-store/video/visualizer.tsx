@@ -40,6 +40,7 @@ const MusicVisualizerApp: React.FC<MusicVisualizerProps> = ({ className }) => {
   // Initialize audio context and analyzer
   const initAudioContext = () => {
     if (!audioContextRef.current) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
       analyserRef.current = audioContextRef.current.createAnalyser();
       analyserRef.current.fftSize = 2048;

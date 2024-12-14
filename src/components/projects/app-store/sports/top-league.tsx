@@ -50,6 +50,7 @@ const LeagueExplorer: React.FC = () => {
         setError('No leagues found');
       }
     } catch (err) {
+      console.log(err)
       setError('Error fetching leagues');
     } finally {
       setLoading(false);

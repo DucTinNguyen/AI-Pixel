@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 
 interface Event {
@@ -58,6 +59,7 @@ const UpcomingEvents: React.FC = () => {
           setEvents([]);
         }
       } catch (err) {
+        console.log(err)
         setError('Failed to fetch events');
       } finally {
         setLoading(false);
@@ -184,7 +186,7 @@ const UpcomingEvents: React.FC = () => {
                     <div className="flex justify-between items-start mb-2">
                       <div className="flex items-center space-x-2">
                         {event.strLeagueBadge && (
-                          <img 
+                          <Image 
                             src={event.strLeagueBadge}
                             alt={event.strLeague}
                             className="w-6 h-6 object-contain"

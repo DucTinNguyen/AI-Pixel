@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 
-interface MagicalPathFinderProps {
-  apiKey: string;
-}
+// interface MagicalPathFinderProps {
+//   apiKey: string;
+// }
 
 const MagicalPathFinder: React.FC = () => {
   const [origin, setOrigin] = useState<string>('');
@@ -109,7 +109,7 @@ const MagicalPathFinder: React.FC = () => {
 
           <div className="bg-[#252847] rounded-lg p-4">
             <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
-              <span>🌙</span> Traveler's Tips
+              <span>🌙</span> Traveler&apos;s Tips
             </h3>
             <ul className="text-sm text-[#e2c7ff]/80 space-y-2">
               <li>🌟 Type specific addresses for precise paths</li>
@@ -141,7 +141,7 @@ const MagicalPathFinder: React.FC = () => {
             ) : (
               <div className="absolute inset-0 flex flex-col items-center justify-center text-[#9f6ef5] p-6">
                 <span className="text-6xl mb-4">🗺️</span>
-                <p className="text-center">Enter your journey's start and end points to reveal the magical path...</p>
+                <p className="text-center">Enter your journey&apos;s start and end points to reveal the magical path...</p>
               </div>
             )}
           </div>

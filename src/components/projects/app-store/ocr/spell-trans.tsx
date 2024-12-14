@@ -70,6 +70,7 @@ const SpellTranslatorApp: React.FC<SpellTranslatorProps> = ({ className = '' }) 
 
       setManaVolume(prev => prev + manaUsed);
     } catch (err) {
+      console.log(err)
       setError('Failed to translate spell recipe');
     } finally {
       setIsTranslating(false);

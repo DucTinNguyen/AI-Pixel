@@ -165,7 +165,7 @@ const DungeonQuest = () => {
   return (
     <div className={styles.container}>
       <div className={styles.mainContainer}>
-        <h1 className={styles.title}>Token Hunter's Quest</h1>
+        <h1 className={styles.title}>Token Hunter&apos;s Quest</h1>
         
         <div className={styles.grid}>
           <div className={styles.card}>

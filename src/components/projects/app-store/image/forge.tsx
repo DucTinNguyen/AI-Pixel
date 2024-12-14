@@ -35,7 +35,7 @@ const DreamweaverForge = () => {
       <div className="absolute inset-0 border-4 border-rose-500/30 pointer-events-none" />
       
       <div className="text-center mb-6">
-        <h1 className="text-3xl text-rose-400">⚜️ Dreamweaver's Forge ⚜️</h1>
+        <h1 className="text-3xl text-rose-400">⚜️ Dreamweaver&apos;s Forge ⚜️</h1>
         <div className="text-rose-300 text-sm">Master of Illusory Arts</div>
       </div>
 

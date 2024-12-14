@@ -612,7 +612,7 @@ export const AppComponents: AppRegistry = {
   },
 };
 
-export const getApps = () => Object.entries(AppComponents).map(([key, app], index) => ({
+export const getApps = () => Object.entries(AppComponents).map(([, app], index) => ({
   id: index + 1,
   title: app.title,
   icon: app.icon,

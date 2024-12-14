@@ -64,7 +64,7 @@ const GrimoireWriterApp: React.FC<GrimoireWriterProps> = ({ className = '' }) =>
     }
   };
 
-  const formatButtonClass = (action: string) => `
+  const formatButtonClass = (action: string) => `${action}
     p-2 text-[#ffd700] hover:text-[#a855f7] hover:bg-[#6b21a8]/20 rounded
     transition-all duration-200 flex items-center justify-center
   `;

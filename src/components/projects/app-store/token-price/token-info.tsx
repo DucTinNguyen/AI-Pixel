@@ -72,6 +72,7 @@ const TokenLookup = () => {
       
       setTokenInfo(fakeToken);
     } catch (err) {
+      console.log(err)
       setError('Failed to decode magical essence');
     } finally {
       setIsLoading(false);

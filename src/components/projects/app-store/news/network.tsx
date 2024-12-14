@@ -245,7 +245,7 @@ const RealmNetwork: React.FC = () => {
 
               {/* Reactions */}
               <div className="flex flex-wrap gap-2 mb-4">
-                {Object.entries(REACTIONS).map(([key, { icon, label }]) => (
+                {Object.entries(REACTIONS).map(([key, { icon,  }]) => (
                   <button
                     key={key}
                     onClick={() => handleReaction(post.id, key as keyof Post['reactions'])}
