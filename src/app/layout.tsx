@@ -8,6 +8,7 @@ import { Toaster } from 'react-hot-toast';
 // eslint-disable-next-line import/no-unresolved
 import bg from '@/assets/images/bg.svg';
 import { Suspense } from 'react';
+import AppWalletProvider from './providers/wallet-provider';
 
 const SilkScreen = localFont({
   src: [
@@ -61,7 +62,9 @@ export default function RootLayout({
           objectPosition="center"
           className="z-0 select-none"
         />
-        <Suspense fallback={<div></div>}>{children}</Suspense>
+        <AppWalletProvider>
+          <Suspense fallback={<div></div>}>{children}</Suspense>
+        </AppWalletProvider>
         <Toaster />
       </body>
     </html>

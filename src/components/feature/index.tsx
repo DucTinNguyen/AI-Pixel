@@ -18,8 +18,11 @@ import toastbg from '@/assets/images/toast-bg.png';
 import { ContentProps } from '@/types';
 
 import Comment from './comment';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 export default function Feature({ closeModal }: ContentProps) {
+   const [isOpen, setIsOpen] = useState(false);
+   const { connect ,connected } = useWallet();
   const router = useRouter();
   const customStyles = {
     overlay: {
@@ -34,7 +37,29 @@ export default function Feature({ closeModal }: ContentProps) {
       backgroundColor: 'rgba(0, 0, 0, 0)',
     },
   };
-  const [isOpen, setIsOpen] = useState(false);
+
+
+ 
+
+
+  const dummyComment = [
+    {
+      username: 'John Walker',
+      message: 'i die when trying to loot corpses',
+    },
+    {
+      username: 'Emma Thompson',
+      message: 'found a secret easter egg',
+    },
+    {
+      username: 'David Wilson',
+      message: 'loving the new features',
+    },
+    {
+      username: 'Sophie Taylor',
+      message: 'this level is impossible',
+    },
+  ];
 
   return (
     <AnimatePresence mode="wait">
@@ -263,7 +288,16 @@ export default function Feature({ closeModal }: ContentProps) {
                   <span className="underline">John woker</span>
                 </div>
                 <div className="flex items-center gap-4">
-                  <button className="relative flex h-[56px] w-[162.5px] items-center justify-center hover:scale-95">
+                  <button
+                    onClick={() => {
+                      if(connected){
+                        setIsOpen(true);
+                      } else {
+                        connect();
+                      }
+                    }}
+                    className="relative flex h-[56px] w-[162.5px] items-center justify-center hover:scale-95"
+                  >
                     <Image
                       src={featurebutton}
                       alt="feature"
@@ -307,7 +341,6 @@ export default function Feature({ closeModal }: ContentProps) {
                 />
                 <button
                   onClick={() => {
-                    setIsOpen(true);
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     toast.custom((t: any) => (
                       <div
@@ -321,7 +354,8 @@ export default function Feature({ closeModal }: ContentProps) {
                           className="z-10"
                         />
                         <h1 className="z-10 font-silkscreen text-base text-white">
-                          COMMENT ADDED SUCCESSFULLY
+                          {/* COMMENT ADDED SUCCESSFULLY */}
+                          COMMING SOON
                         </h1>
                         <Image
                           src={toastbg}
@@ -345,18 +379,13 @@ export default function Feature({ closeModal }: ContentProps) {
                   </span>
                 </button>
               </div>
-              <Comment
-                username="John Walker"
-                message="i die when trying to loot corpses"
-              />
-              <Comment
-                username="John Walker"
-                message="i die when trying to loot corpses"
-              />
-              <Comment
-                username="John Walker"
-                message="i die when trying to loot corpses"
-              />
+              {dummyComment.map((comment, index) => (
+                <Comment
+                  key={index}
+                  message={comment.message}
+                  username={comment.username}
+                />
+              ))}
             </div>
           </div>
         </div>
