@@ -2,22 +2,16 @@
 
 import 'react-contexify/dist/ReactContexify.css';
 
-import { DndContext, type DragEndEvent } from '@dnd-kit/core';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { Menu, useContextMenu } from 'react-contexify';
-import Modal from 'react-modal';
-import { Rnd } from 'react-rnd';
-import toastbg from '@/assets/images/toast-bg.png';
-import commenticon from '@/assets/images/comment-icon.png';
 import cooking from '@/assets/gifs/cooking.gif';
+import commenticon from '@/assets/images/comment-icon.png';
 import docs from '@/assets/images/docs.svg';
-import editProfileFeather from '@/assets/images/edit-profile-feather.svg';
+import off from '@/assets/images/off.svg';
+import on from '@/assets/images/on.svg';
+import toastbg from '@/assets/images/toast-bg.png';
 import trash from '@/assets/images/trash.svg';
 import ui from '@/assets/images/ui.svg';
 import x from '@/assets/images/x.svg';
+import ModalConnectWallet from '@/components/connect-modal';
 import Draggable from '@/components/draggable';
 import Droppable from '@/components/droppable';
 import Feature from '@/components/feature';
@@ -26,17 +20,22 @@ import Laboratory from '@/components/laboratory';
 import Marketplace from '@/components/marketplace';
 import Profile from '@/components/profile';
 import TabButton from '@/components/tab-button';
+import GameWindow from '@/components/window-overlay/game-window';
+import Taskbar from '@/components/window-overlay/taskbar';
 import useItemStore from '@/stores/use-item-store';
+import { useConnectStore } from '@/stores/use-modal-connect';
 import useWindowStore from '@/stores/use-window-store';
 import type { ContentProps, Item } from '@/types';
-import ModalConnectWallet from '@/components/connect-modal';
-import { useConnectStore } from '@/stores/use-modal-connect';
-import toast from 'react-hot-toast';
-import on from '@/assets/images/on.svg';
-import off from '@/assets/images/off.svg';
-import Taskbar from '@/components/window-overlay/taskbar';
-import GameWindow from '@/components/window-overlay/game-window';
 import { sounds } from '@/utils/sounds';
+import { DndContext, type DragEndEvent } from '@dnd-kit/core';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Menu, useContextMenu } from 'react-contexify';
+import toast from 'react-hot-toast';
+import Modal from 'react-modal';
+import { Rnd } from 'react-rnd';
 
 // export const sounds = {
 //   background: new Howl({
@@ -85,11 +84,6 @@ export default function Home() {
     {
       title: 'Marketplace',
       tabContent: (props: ContentProps) => <Marketplace {...props} />,
-      isActive: false,
-    },
-    {
-      title: 'Magic orb',
-      tabContent: () => <></>,
       isActive: false,
     },
   ];
@@ -397,22 +391,6 @@ export default function Home() {
         <div className="absolute right-[60px] hidden space-y-4 pt-14 hover:cursor-pointer md:block">
           <div className="flex justify-end">
             <Profile name="John woker" />
-          </div>
-          <div className="w-[370px] space-y-2">
-            <div className="flex justify-end">
-              <Image
-                src={editProfileFeather}
-                alt="editProfileFeather"
-                width={33}
-                className="relative select-none"
-              />
-              <p className="text-right font-silkscreen text-base font-bold leading-normal tracking-tight text-[#fdc840]">
-                Contract Address:
-              </p>
-            </div>
-            <div className="whitespace-break-spaces break-words text-right font-silkscreen text-base font-bold leading-normal tracking-tight text-white">
-              HNg5PYJmtqcmzXrv6S9zP1CDKk5BgDuyFBxbvNApump
-            </div>
           </div>
         </div>
 

@@ -152,9 +152,6 @@ const PotionTracker = () => {
           <button className="px-4 py-2 bg-[#4a4a6a] text-yellow-400 rounded hover:bg-[#6a6a8a] transition-colors">
             Marketplace
           </button>
-          <button className="px-4 py-2 bg-[#4a4a6a] text-yellow-400 rounded hover:bg-[#6a6a8a] transition-colors">
-            Magic Orb
-          </button>
         </div>
       </div>
     </div>
