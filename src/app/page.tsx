@@ -6,11 +6,12 @@ import { DndContext, type DragEndEvent } from '@dnd-kit/core';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import {  useState } from 'react';
+import {  useEffect, useState } from 'react';
 import { Menu, useContextMenu } from 'react-contexify';
 import Modal from 'react-modal';
 import { Rnd } from 'react-rnd';
-
+import toastbg from '@/assets/images/toast-bg.png';
+import commenticon from '@/assets/images/comment-icon.png';
 import cooking from '@/assets/gifs/cooking.gif';
 import docs from '@/assets/images/docs.svg';
 import editProfileFeather from '@/assets/images/edit-profile-feather.svg';
@@ -30,6 +31,7 @@ import useWindowStore from '@/stores/use-window-store';
 import type { ContentProps, Item } from '@/types';
 import ModalConnectWallet from '@/components/connect-modal';
 import { useConnectStore } from '@/stores/use-modal-connect';
+import toast from 'react-hot-toast';
 
 export default function Home() {
   const items = [
@@ -172,6 +174,19 @@ export default function Home() {
     setConnectModal(value);
   }
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check viewport size on mount and resize
+  useEffect(() => {
+    const checkViewport = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+    };
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+    return () => window.removeEventListener('resize', checkViewport);
+  }, []);
+
 
   return (
     <>
@@ -212,8 +227,8 @@ export default function Home() {
             </Rnd>
           ))}
         </div>
-        <div className="absolute md:flex hidden min-h-full w-full flex-col-reverse gap-10 pb-[60px] lg:gap-5 lg:pb-4">
-          <div className="flex justify-center gap-4">
+        <div className="absolute flex min-h-full w-full flex-col-reverse gap-10 pb-[60px] lg:gap-5 lg:pb-4">
+          <div className="flex justify-center gap-4 z-30">
             {tabs.map(tab => (
               <TabButton
                 key={tab.title}
@@ -221,6 +236,32 @@ export default function Home() {
                 isOpen={tab.title === currentTab}
                 title={tab.title}
                 onClick={() => {
+                 if(isMobile) {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    toast.custom((t: any) => (
+                      <div
+                        className={` ${t.visible ? 'animate-slide-in' : 'animate-slide-out'} relative flex h-[64px] w-[390px] items-center gap-3 p-[14px]`}
+                      >
+                        <Image
+                          src={commenticon}
+                          alt="commenticon"
+                          width={45}
+                          height={28}
+                          className="z-10"
+                        />
+                        <h1 className="z-10 font-silkscreen text-base text-white">
+                          This feature is not available on mobile
+                        </h1>
+                        <Image
+                          src={toastbg}
+                          alt="toastbg"
+                          layout="fill"
+                          objectFit="cover"
+                        />
+                      </div>
+                    ));
+                   return;
+                 } 
                   if (tab.title === currentTab) {
                     setIsOpen(false);
                     setCurrentTab(undefined);

@@ -15,7 +15,7 @@ export default function TabButton({ onClick, isOpen, isActive, title }: Props) {
   return (
     <>
       <div
-        className={`relative inline-flex h-[49px] w-[208px] items-center justify-center hover:cursor-pointer`}
+        className={`relative inline-flex h-[30px] w-[120px] items-center justify-center hover:cursor-pointer md:h-[49px] md:w-[208px]`}
         onClick={onClick}
       >
         {isOpen ? (
@@ -34,7 +34,7 @@ export default function TabButton({ onClick, isOpen, isActive, title }: Props) {
           />
         )}
         <div
-          className={`tab-text relative select-none font-junkyard text-xl ${isOpen ? 'text-[#FDC840]' : isActive ? 'text-[#DD831A]' : 'text-[#747474]'}`}
+          className={`tab-text relative select-none font-junkyard text-[10px] md:text-base ${isOpen ? 'text-[#FDC840]' : isActive ? 'text-[#DD831A]' : 'text-[#747474]'}`}
         >
           {title}
         </div>

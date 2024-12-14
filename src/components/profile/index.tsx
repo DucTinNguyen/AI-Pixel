@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { useState } from 'react';
 import Modal from 'react-modal';
 
 import modalbody from '@/assets/images/modal-body-account.svg';
@@ -11,6 +10,7 @@ import profileBar from '@/assets/images/profile-bar.svg';
 
 import ProfileTabs from './profile-tabs';
 import { motion } from 'framer-motion';
+import { useModalStore } from '@/stores/use-modal-store';
 
 interface Props {
   name: string;
@@ -31,12 +31,15 @@ export default function Profile({ name }: Props) {
       padding: 0,
     },
   };
-  const [isOpen, setIsOpen] = useState(false);
+  const {profileModal,setProfileModal} = useModalStore()
 
   return (
     <>
       <div className="relative h-[80px] w-[252px]">
-        <div className="hover:cursor-pointer" onClick={() => setIsOpen(true)}>
+        <div
+          className="hover:cursor-pointer"
+          onClick={() => setProfileModal(true)}
+        >
           <Image
             src={profileBar}
             alt="profile bar"
@@ -55,7 +58,7 @@ export default function Profile({ name }: Props) {
         </p>
       </div>
 
-      <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
+      <Modal isOpen={profileModal} ariaHideApp={false} style={customStyles}>
         <motion.div
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -83,7 +86,7 @@ export default function Profile({ name }: Props) {
             </div>
             <div
               className="relative -inset-y-6 inset-x-6 z-50 flex w-full items-center justify-end hover:cursor-pointer"
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => setProfileModal(!profileModal)}
             >
               <Image
                 src={modalclose}

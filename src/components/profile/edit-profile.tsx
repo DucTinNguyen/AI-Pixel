@@ -2,7 +2,9 @@ import Image from 'next/image';
 
 import editProfileFeather from '@/assets/images/edit-profile-feather.svg';
 import editProfileSave from '@/assets/images/edit-profile-save.svg';
+import { useModalStore } from '@/stores/use-modal-store';
 export default function EditProfile() {
+  const {setProfileModal} = useModalStore()
   return (
     <div className="space-y-6 px-[55px] py-[35px]">
       <div className="flex flex-col gap-2">
@@ -29,7 +31,11 @@ export default function EditProfile() {
       </div>
 
       <div className="relative flex w-full justify-end">
-        <div className="relative h-[54px] w-[142px] hover:cursor-pointer">
+        <button 
+        onClick={() => {
+          setProfileModal(false)
+        }}
+        className="relative h-[54px] w-[142px] hover:cursor-pointer">
           <Image
             src={editProfileSave}
             alt="editProfileSave"
@@ -47,7 +53,7 @@ export default function EditProfile() {
               Save
             </p>
           </div>
-        </div>
+        </button>
       </div>
     </div>
   );
