@@ -1,9 +1,14 @@
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import React from 'react';
 
-import test from '@/assets/images/test-card.png';
 
-const FeatureCard = () => {
+const FeatureCard = ({
+  title,
+  image,
+}: {
+  title: string;
+  image: StaticImageData;
+}) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="relative h-[220px] w-[219px] shadow-[-3.745px_0px_0px_0px_#A9ACB8,0px_-3.745px_0px_0px_#A9ACB8,0px_3.745px_0px_0px_#000,3.745px_0px_0px_0px_#000]">
@@ -163,13 +168,13 @@ const FeatureCard = () => {
         {/* Image container */}
         <div className="relative h-full p-3">
           <div className="relative h-[195px] w-[194px]">
-            <Image src={test} alt="test" layout="fill" objectFit="cover" />
+            <Image src={image} alt="test" layout="fill" objectFit="cover" />
           </div>
         </div>
       </div>
 
       <span className="font-silkscreen text-sm text-white">
-        Live Chat pro v2
+        {title}
       </span>
     </div>
   );

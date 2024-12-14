@@ -10,12 +10,19 @@ import skullbutton from '@/assets/images/skull-button.svg';
 import { ContentProps } from '@/types';
 
 import FeatureCard from './feature-card';
+import { games } from '@/constants/game';
+import { useState } from 'react';
 
 export default function Marketplace({
   closeModal,
   setCurrentTab,
 }: ContentProps) {
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const filteredGames = games.filter(
+    game =>
+      game.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <AnimatePresence mode="wait">
@@ -59,6 +66,7 @@ export default function Marketplace({
           <div className="flex items-center gap-6">
             <input
               type="text"
+              onChange={e => setSearchQuery(e.target.value)}
               placeholder="Searh...( use @ tosearch by author or for category"
               className="h-[56px] flex-1 border-4 border-[#8B98B8] bg-transparent px-6 py-[19px] text-sm text-white placeholder:text-white"
             />
@@ -80,15 +88,15 @@ export default function Marketplace({
           </div>
           <h1 className="font-junkyard text-base text-white">Feature app</h1>
           <div className="no-scrollbar grid grid-cols-4 justify-between gap-y-10 overflow-auto overflow-y-auto">
-            {Array.from({ length: 8 }).map((_, index) => (
+            {filteredGames.map((game, index) => (
               <div
                 key={index}
                 onClick={() => {
                   setCurrentTab('Feature');
-                  router.push('?feature=11110111');
+                  router.push(`?feature=${game.id}`);
                 }}
               >
-                <FeatureCard />
+                <FeatureCard title={game.title} image={game.image} />
               </div>
             ))}
           </div>

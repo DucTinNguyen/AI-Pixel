@@ -5,7 +5,7 @@ import 'react-contexify/dist/ReactContexify.css';
 import { DndContext, type DragEndEvent } from '@dnd-kit/core';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {  useEffect, useState } from 'react';
 import { Menu, useContextMenu } from 'react-contexify';
 import Modal from 'react-modal';
@@ -60,7 +60,7 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentTab, setCurrentTab] = useState<string>();
   const searchParams = useSearchParams();
-
+  const router = useRouter();
   const feature = searchParams.get('feature');
 
   const tabs = [
@@ -263,9 +263,11 @@ export default function Home() {
                    return;
                  } 
                   if (tab.title === currentTab) {
+                    router.push('/');
                     setIsOpen(false);
                     setCurrentTab(undefined);
                   } else {
+                    router.push('/')
                     setIsOpen(true);
                     setCurrentTab(tab.title);
                   }
@@ -296,7 +298,7 @@ export default function Home() {
                   height={90}
                   className="lg:h-[70px] lg:w-[70px] w-[50px] h-[50px]"
                 />
-                <span className="max-w-[90px] text-center md:text-lg text-sm">{item.title}</span>
+                <span className="max-w-[90px] text-center md:text-lg text-sm text-white">{item.title}</span>
               </Link>
             ))}
             {storedItems.map(item => (

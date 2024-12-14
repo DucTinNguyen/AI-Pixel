@@ -165,7 +165,7 @@ export default function NormalModelButton() {
                 alt="option.icon"
                 className="select-none"
               />
-              <div className="select-none">{option.value}</div>
+              <div className="select-none text-white">{option.value}</div>
             </div>
           ))}
         </div>

@@ -11,7 +11,7 @@ import featurebutton from '@/assets/images/feature-button.svg';
 import featureheader from '@/assets/images/feature-header.svg';
 import sendbutton from '@/assets/images/send-button.svg';
 import shield from '@/assets/images/shield.svg';
-import test from '@/assets/images/test-card.png';
+
 import tipbutton from '@/assets/images/tip-button.svg';
 import tipheader from '@/assets/images/tip-header.svg';
 import toastbg from '@/assets/images/toast-bg.png';
@@ -20,7 +20,8 @@ import { ContentProps } from '@/types';
 import Comment from './comment';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useConnectStore } from '@/stores/use-modal-connect';
-
+import { games } from '@/constants/game';
+import { useSearchParams } from 'next/navigation'
 
 
 export default function Feature({ closeModal }: ContentProps) {
@@ -28,6 +29,9 @@ export default function Feature({ closeModal }: ContentProps) {
    const { connected } = useWallet();
    const { setConnectModal} = useConnectStore();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const search = searchParams.get('feature');
+
   const customStyles = {
     overlay: {
       backgroundColor: 'rgba(39, 39, 39, 0.60)',
@@ -44,6 +48,9 @@ export default function Feature({ closeModal }: ContentProps) {
   };
 
 
+  const findGame = () => {
+    return games.find(game => game.id === search);
+  }
  
 
 
@@ -76,7 +83,9 @@ export default function Feature({ closeModal }: ContentProps) {
         className="relative z-30 flex w-[989px] flex-col"
       >
         <div className="relative flex h-[56px] w-full items-center justify-center">
-          <h1 className="feature-title z-20 text-xl">snakeverse</h1>
+          <h1 className="feature-title z-20 text-xl">
+            {search ? findGame()!.title : 'Unknown Game'}
+          </h1>
           <button
             onClick={() => {
               closeModal();
@@ -268,7 +277,7 @@ export default function Feature({ closeModal }: ContentProps) {
                 <div className="relative h-full p-3">
                   <div className="relative h-[195px] w-[194px]">
                     <Image
-                      src={test}
+                      src={findGame()!.image}
                       alt="test"
                       layout="fill"
                       objectFit="cover"
@@ -277,25 +286,25 @@ export default function Feature({ closeModal }: ContentProps) {
                 </div>
               </div>
               <div className="flex flex-col gap-4">
-                <h1 className="feature-title text-sm">snakeverse</h1>
+                <h1 className="feature-title text-sm">
+                  {search ? findGame()?.title : 'Unknown Game'}
+                </h1>
                 <div className="flex flex-col gap-[6px]">
                   <span className="font-silkscreen text-sm font-bold text-white">
                     Description
                   </span>
                   <p className="font-silkscreen text-sm font-normal text-[#A3A8B0]">
-                    multiplayer snake game brought to you by alch team. make
-                    other snakes hit you to eliminate them. press left click to
-                    enable dash
+                    {findGame()!.description}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 font-silkscreen text-sm font-normal text-white">
                   <span>Creator:</span>
-                  <span className="underline">John woker</span>
+                  <span className="underline">{findGame()!.author}</span>
                 </div>
                 <div className="flex items-center gap-4">
                   <button
                     onClick={() => {
-                      if(connected){
+                      if (connected) {
                         setIsOpen(true);
                       } else {
                         setConnectModal(true);
