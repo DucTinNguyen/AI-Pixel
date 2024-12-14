@@ -66,7 +66,9 @@ const dungeonRooms: DungeonRoom[] = [
 
 const generateTokenAddress = () => {
   const chars = '0123456789abcdef';
-  return '0x' + Array.from({ length: 40 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+  const prefix = Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+  const suffix = Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+  return `0x${prefix}...${suffix}`;
 };
 
 const DungeonQuest = () => {

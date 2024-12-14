@@ -37,14 +37,6 @@ import toast from 'react-hot-toast';
 import Modal from 'react-modal';
 import { Rnd } from 'react-rnd';
 
-// export const sounds = {
-//   background: new Howl({
-//     src: ['/assets/sound/Magic.mp3'],
-//     loop: true,
-//     volume: 0.5,
-//   }),
-// };
-
 export default function Home() {
   const items = [
     {
