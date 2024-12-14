@@ -31,6 +31,7 @@ export default function Feature({ closeModal }: ContentProps) {
   const customStyles = {
     overlay: {
       backgroundColor: 'rgba(39, 39, 39, 0.60)',
+      
     },
     content: {
       border: 'none',
