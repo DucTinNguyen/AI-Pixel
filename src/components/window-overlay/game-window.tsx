@@ -9,6 +9,7 @@ import folderShare from "@/assets/images/folder-share.svg";
 import folderChat from "@/assets/images/folder-chat.svg";
 import folderScreen from "@/assets/images/folder-screen.svg";
 import folderMinimize from "@/assets/images/folder-minimize.svg";
+import Image from 'next/image';
 
 const GameWindow = ({ game, closeGame, windowId }: { 
   game: Item; 
@@ -44,12 +45,15 @@ const GameWindow = ({ game, closeGame, windowId }: {
       <div className="relative flex h-[56px] w-full drag-handle">
         {/* Background image container */}
         <div className="absolute inset-0 w-full h-[56px] overflow-hidden pointer-events-none">
-          <img
-            src={folderHeader.src}
-            alt="window header"
-            className="w-full h-full object-cover"
-            draggable={false}
-          />
+          <div className='relative w-full h-full'>
+            <img
+              src={folderHeader.src}
+              alt="window header"
+              className="min-w-full min-h-full block"
+              draggable={false}
+            />
+            
+          </div>
         </div>
 
         {/* Title and buttons container */}
