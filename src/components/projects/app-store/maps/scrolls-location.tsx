@@ -2,17 +2,6 @@
 
 import React, { useState } from 'react';
 
-// interface SearchResult {
-//   name: string;
-//   rating: number;
-//   address: string;
-//   isOpen: boolean;
-//   type: 'library' | 'bookstore';
-// }
-
-// interface MagicalScrollFinderProps {
-//   apiKey: string;
-// }
 
 const MagicalScrollFinder: React.FC = () => {
   const [city, setCity] = useState<string>('');
@@ -36,7 +25,7 @@ const MagicalScrollFinder: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl bg-[#1a1c2e] text-[#e2c7ff] rounded-lg shadow-lg p-6">
+    <div className="w-full bg-[#1a1c2e] text-[#e2c7ff] rounded-lg shadow-lg p-6 text-sm">
       <div className="flex items-center gap-4 mb-6">
         <span className="text-3xl">📜</span>
         <h2 className="text-2xl font-bold bg-gradient-to-r from-[#9f6ef5] to-[#c77dff] text-transparent bg-clip-text">
@@ -59,9 +48,9 @@ const MagicalScrollFinder: React.FC = () => {
               />
             </div>
 
-            <div className="mb-4">
-              <label className="block text-sm mb-2">✨ Choose Your Destination</label>
-              <div className="grid grid-cols-2 gap-2">
+            <div className="mb-4 text-xs">
+              <label className="block text-xs mb-2">✨ Choose Your Destination</label>
+              <div className="grid grid-cols-2 gap-2 ">
                 <button
                   onClick={() => setSearchType('library')}
                   className={`p-2 rounded-lg transition-colors flex items-center justify-center gap-2 ${
@@ -82,7 +71,7 @@ const MagicalScrollFinder: React.FC = () => {
                   }`}
                 >
                   <span>📖</span>
-                  Bookstores
+                  Stores
                 </button>
               </div>
             </div>
