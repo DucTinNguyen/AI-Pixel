@@ -27,7 +27,7 @@ import { useConnectStore } from '@/stores/use-modal-connect';
 import useWindowStore from '@/stores/use-window-store';
 import type { ContentProps, Item } from '@/types';
 import { sounds } from '@/utils/sounds';
-import { DndContext, type DragEndEvent } from '@dnd-kit/core';
+import { DndContext, useDroppable, type DragEndEvent } from '@dnd-kit/core';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -127,6 +127,7 @@ export default function Home() {
   const openFolder = useWindowStore(state => state.openFolder);
   const closeWindow = useWindowStore(state => state.closeWindow);
   const addAppToFolder = useItemStore(state => state.addAppToFolder);
+  const removeApp = useItemStore(state => state.removeApp)
   const moveItemToLatest = useItemStore(state => state.moveItemToLatest);
 
   /* ATP1 */
@@ -173,21 +174,58 @@ export default function Home() {
     const dragDistance = Math.sqrt(
       Math.pow(event.delta.x, 2) + Math.pow(event.delta.y, 2)
     );
-    
-    // If dropping over a folder, add to folder regardless of drag distance
-    if (event.over) {
-      const folderId = event.over.id as string;
-      addAppToFolder(folderId, event.active.id as string);
-    } 
-    // Only consider it a drag if distance is greater than item size (50px)
-    else if (dragDistance > 50) {
-      moveItemToLatest(event.active.id as string);
+
+    // drop to trash
+    if (event.over && event.over.id === 'trash-dropzone') {
+      removeApp(event.active.id as string);
     }
+      if (event.over) {
+        // If dropping over a folder, add to folder regardless of drag distance
+        const folderId = event.over.id as string;
+        addAppToFolder(folderId, event.active.id as string);
+      }
+      // Only consider it a drag if distance is greater than item size (50px)
+      else if (dragDistance > 50) {
+        moveItemToLatest(event.active.id as string);
+      }
   };
 
   const handleConnectModal = (value: boolean) => {
     setConnectModal(value);
   }
+
+  const renderStaticItems = () => {
+    return items.map(item => {
+      if (item.title === 'Trash') {
+        return (
+          <TrashDroppable
+            key={item.title}
+            icon={item.icon}
+            title={item.title}
+          />
+        );
+      }
+
+      return (
+        <Link
+          href={item.href}
+          key={item.title}
+          className="flex flex-col items-center gap-4"
+        >
+          <Image
+            src={item.icon}
+            alt={item.title}
+            width={90}
+            height={90}
+            className="h-[50px] w-[50px] lg:h-[70px] lg:w-[70px]"
+          />
+          <span className="max-w-[90px] text-center text-sm text-white md:text-lg">
+            {item.title}
+          </span>
+        </Link>
+      );
+    });
+  }; 
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -348,22 +386,7 @@ export default function Home() {
 
         <DndContext id="desktop" onDragEnd={handleDragEnd}>
           <div className="absolute md:left-[60px] left-4 flex h-screen flex-col flex-wrap gap-[24.576px] gap-x-10 md:pt-14 pt-8">
-            {items.map(item => (
-              <Link
-                href={item.href}
-                key={item.title}
-                className="flex flex-col items-center gap-4"
-              >
-                <Image
-                  src={item.icon}
-                  alt={item.title}
-                  width={90}
-                  height={90}
-                  className="lg:h-[70px] lg:w-[70px] w-[50px] h-[50px]"
-                />
-                <span className="max-w-[90px] text-center md:text-lg text-sm text-white">{item.title}</span>
-              </Link>
-            ))}
+            {renderStaticItems()}
             {storedItems.map(item => (
               <div
                 key={item.id}
@@ -455,4 +478,31 @@ function DesktopFolder({ item }: { item: Item }) {
       </Menu>
     </>
   );
+
+  
 }
+const TrashDroppable = ({ icon, title }: { icon: string; title: string }) => {
+  const { setNodeRef, isOver } = useDroppable({
+    id: 'trash-dropzone',
+  });
+
+  return (
+    <div
+      ref={setNodeRef}
+      className={`flex flex-col items-center gap-4 ${
+        isOver ? 'opacity-70' : ''
+      }`}
+    >
+      <Image
+        src={icon}
+        alt={title}
+        width={90}
+        height={90}
+        className="h-[50px] w-[50px] lg:h-[70px] lg:w-[70px]"
+      />
+      <span className="max-w-[90px] text-center text-sm text-white md:text-lg">
+        {title}
+      </span>
+    </div>
+  );
+};
