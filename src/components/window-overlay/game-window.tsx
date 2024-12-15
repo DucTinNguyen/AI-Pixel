@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+'use client';
+
+import React, { useRef, useState } from 'react';
 import useItemStore from "@/stores/use-item-store";
 import useWindowStore from "@/stores/use-window-store";
 import { Item } from "@/types";
@@ -21,6 +23,9 @@ interface GameWindowProps {
 const GameWindow: React.FC<GameWindowProps> = ({ game, closeGame, windowId }) => {
   const [showChat, setShowChat] = useState(false);
   const [showMarketplace, setShowMarketplace] = useState(false);
+  const [isCapturing, setIsCapturing] = useState(false);
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const windowRef = useRef<HTMLDivElement>(null);
   
   const minimizeWindow = useWindowStore(state => state.minimizeWindow);
   const getComponent = useItemStore(state => state.getComponent);
@@ -31,98 +36,155 @@ const GameWindow: React.FC<GameWindowProps> = ({ game, closeGame, windowId }) =>
     return null;
   }
 
+  const captureWindow = async () => {
+    if (!windowRef.current) return;
+    
+    try {
+      setIsCapturing(true);
+      const html2canvas = (await import('html2canvas')).default;
+      const canvas = await html2canvas(windowRef.current, {
+        backgroundColor: null,
+        scale: 2,
+        logging: false,
+        windowWidth: windowRef.current.scrollWidth,
+        windowHeight: windowRef.current.scrollHeight,
+      });
+      
+      const imageData = canvas.toDataURL('image/png');
+      setCapturedImage(imageData);
+      setShowMarketplace(true);
+    } catch (err) {
+      console.error('Failed to capture window:', err);
+    } finally {
+      setIsCapturing(false);
+    }
+  };
+
   const handleChat = () => setShowChat(!showChat);
   const handleShare = () => {};
-  const handleScreen = () => setShowMarketplace(!showMarketplace);
+  const handleScreen = () => captureWindow();
   const handleSave = () => {};
 
   const windowWidth = Math.max(game.width ?? 700, 400);
 
   return (
-    <div className="relative">
-      {/* Chat Popup */}
-      {showChat && <ChatPopup onClose={() => setShowChat(false)} />}
-      
-      {/* Main Game Window */}
-      <div 
+    <>
+      {/* Loading Overlay - Outside capture area */}
+      {isCapturing && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
         style={{ 
-          width: windowWidth+40,
-          height: (game.height ?? 700) + 56
+          width: windowWidth + 40,
+          height: Math.max((game.height ?? 700), 540) + 56
         }}
-        className="relative"
-      >
-        {/* Header - Made entirely draggable */}
-        <div className="relative flex h-[56px] w-full drag-handle">
-          <div className="absolute inset-0 w-full h-[56px] overflow-hidden pointer-events-none">
-            <div className='relative w-full h-full'>
-              <img
-                src={folderHeader.src}
-                alt="window header"
-                className="min-w-full min-h-full block"
-                draggable={false}
-              />
-            </div>
-          </div>
-
-          <div className="relative w-full flex items-center justify-between px-[18px] h-full">
-            <div className="select-none text-[#ffd700] font-silkscreen truncate max-w-[calc(100%-300px)] pointer-events-none">
-              {game.name}
-            </div>
-
-            <div className="flex items-center gap-[8px] h-full py-[5px] pointer-events-auto">
-              <button className="w-[40px] h-[40px] flex items-center justify-center" onClick={handleChat}>
-                <img src={folderChat.src} alt="chat" className="select-none hover:cursor-pointer" draggable={false} />
-              </button>
-              <button className="w-[40px] h-[40px] flex items-center justify-center" onClick={handleShare}>
-                <img src={folderShare.src} alt="share" className="select-none hover:cursor-pointer" draggable={false} />
-              </button>
-              <button className="w-[40px] h-[40px] flex items-center justify-center" onClick={handleScreen}>
-                <img src={folderScreen.src} alt="screen" className="select-none hover:cursor-pointer" draggable={false} />
-              </button>
-              <button className="w-[40px] h-[40px] flex items-center justify-center" onClick={handleSave}>
-                <img src={folderSave.src} alt="save" className="select-none hover:cursor-pointer" draggable={false} />
-              </button>
-              <button 
-                className="w-[40px] h-[40px] flex items-center justify-center" 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  minimizeWindow(windowId);
-                }}
-              >
-                <img src={folderMinimize.src} alt="minimize" className="select-none hover:cursor-pointer" draggable={false} />
-              </button>
-              <button 
-                className="w-[40px] h-[40px] flex items-center justify-center" 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  closeGame();
-                }}
-              >
-                <img src={folderClose.src} alt="close" className="select-none hover:cursor-pointer" draggable={false} />
-              </button>
-            </div>
+        >
+          <div className="bg-purple-900/90 px-4 py-2 rounded-lg text-white font-silkscreen">
+            Capturing App...
           </div>
         </div>
+      )}
 
+      {/* Main Window - Capture Area */}
+      <div 
+        className="relative"
+        style={{ width: windowWidth + 40 }}
+        ref={windowRef}
+        id={`game-window-${windowId}`}
+      >
+        {/* Chat Popup */}
+        {showChat && <ChatPopup onClose={() => setShowChat(false)} />}
+
+        {/* Marketplace Popup */}
+        {showMarketplace && (
+          <MarketplacePopup 
+            onClose={() => {
+              setShowMarketplace(false);
+              setCapturedImage(null);
+            }} 
+            capturedImage={capturedImage}
+          />
+        )}
+        
+        {/* Main Game Window */}
         <div 
-          className="w-full border-x-2 border-b-2 border-[#8b98b8] bg-[#192539] overflow-y-auto magical-scroll "
           style={{ 
-            height: (game.height ?? 700)
+            width: windowWidth + 40,
+            height: Math.max((game.height ?? 700), 540) + 56
           }}
+          className="relative"
         >
-          {GameComponent ? (
-            <GameComponent />
-          ) : (
-            <div className="flex items-center justify-center h-full text-[#99a0ae]">
-              Game content will go here
+          {/* Header - Made entirely draggable */}
+          <div className="relative flex h-[56px] w-full drag-handle">
+            <div className="absolute inset-0 w-full h-[56px] overflow-hidden pointer-events-none">
+              <div className='relative w-full h-full'>
+                <img
+                  src={folderHeader.src}
+                  alt="window header"
+                  className="min-w-full min-h-full block"
+                  draggable={false}
+                />
+              </div>
             </div>
-          )}
+
+            <div className="relative w-full flex items-center justify-between px-[18px] h-full">
+              <div className="select-none text-[#ffd700] font-silkscreen truncate max-w-[calc(100%-300px)] pointer-events-none">
+                {game.name}
+              </div>
+
+              <div className="flex items-center gap-[8px] h-full py-[5px] pointer-events-auto">
+                <button className="w-[40px] h-[40px] flex items-center justify-center" onClick={handleChat}>
+                  <img src={folderChat.src} alt="chat" className="select-none hover:cursor-pointer" draggable={false} />
+                </button>
+                <button className="w-[40px] h-[40px] flex items-center justify-center" onClick={handleShare}>
+                  <img src={folderShare.src} alt="share" className="select-none hover:cursor-pointer" draggable={false} />
+                </button>
+                <button 
+                  className="w-[40px] h-[40px] flex items-center justify-center" 
+                  onClick={handleScreen}
+                  disabled={isCapturing}
+                >
+                  <img src={folderScreen.src} alt="screen" className="select-none hover:cursor-pointer" draggable={false} />
+                </button>
+                <button className="w-[40px] h-[40px] flex items-center justify-center" onClick={handleSave}>
+                  <img src={folderSave.src} alt="save" className="select-none hover:cursor-pointer" draggable={false} />
+                </button>
+                <button 
+                  className="w-[40px] h-[40px] flex items-center justify-center" 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    minimizeWindow(windowId);
+                  }}
+                >
+                  <img src={folderMinimize.src} alt="minimize" className="select-none hover:cursor-pointer" draggable={false} />
+                </button>
+                <button 
+                  className="w-[40px] h-[40px] flex items-center justify-center" 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    closeGame();
+                  }}
+                >
+                  <img src={folderClose.src} alt="close" className="select-none hover:cursor-pointer" draggable={false} />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div 
+            className="w-full border-x-2 flex items-center justify-center 
+            border-b-2 border-[#8b98b8] bg-[#192539] overflow-y-auto magical-scroll"
+            style={{ height: Math.max((game.height ?? 700), 540) }}
+          >
+            {GameComponent ? (
+              <GameComponent />
+            ) : (
+              <div className="flex items-center justify-center h-full text-[#99a0ae]">
+                Game content will go here
+              </div>
+            )}
+          </div>
         </div>
       </div>
-
-      {/* Marketplace Popup */}
-      {showMarketplace && <MarketplacePopup onClose={() => setShowMarketplace(false)} />}
-    </div>
+    </>
   );
 };
 
