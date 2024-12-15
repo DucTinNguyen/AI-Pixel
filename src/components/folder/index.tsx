@@ -54,7 +54,7 @@ export default function Folder({ folder, closeFolder, ...props }: Props) {
               draggable={false}
               className="fixed select-none"
             />
-            <div className="grid h-[291px] w-[497px] grid-cols-4 overflow-auto">
+            <div className="grid h-[291px] w-[497px] grid-cols-4 overflow-auto magical-scroll ">
               {folder?.apps?.map(app => (
                 <div key={app.id} className="relative">
                   <Draggable id={app.id}>

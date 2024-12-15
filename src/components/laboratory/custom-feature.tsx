@@ -139,7 +139,7 @@ export default function CustomFeature({ features, setFeatures }: CustomFeaturePr
               />
             </div>
           </div>
-          <div className="relative max-h-[420px] w-[669px] overflow-y-auto px-10 pt-20">
+          <div className="relative max-h-[420px] w-[669px] overflow-y-auto magical-scroll  px-10 pt-20">
             <div className="grid grid-cols-2 gap-6">
               {features.map((feature, index) => (
                 <div key={feature.name} className="flex items-center gap-4">

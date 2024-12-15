@@ -261,7 +261,7 @@ const AlchemyLab = () => {
 
         <div className={`${styles.card} mt-4`}>
           <h2 className="text-xl mb-4">Token History</h2>
-          <div className="max-h-48 overflow-y-auto space-y-2">
+          <div className="max-h-48 overflow-y-auto magical-scroll  space-y-2">
             {brewedTokens.map((token, ) => (
               <div
                 key={token.address}

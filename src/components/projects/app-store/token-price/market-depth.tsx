@@ -42,7 +42,7 @@ const MagicalMarketDepth = () => {
   }, [selectedPotion]);
 
   return (
-    <div className="bg-[#2a2a4a] p-6 rounded-lg border-2 border-[#4a4a6a] relative max-h-[400px] overflow-y-auto">
+    <div className="bg-[#2a2a4a] p-6 rounded-lg border-2 border-[#4a4a6a] relative max-h-[400px] overflow-y-auto magical-scroll ">
       {/* Magical shimmer effect */}
       <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500 animate-shimmer" />
 

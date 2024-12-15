@@ -106,7 +106,7 @@ const SoulScribe = () => {
   };
 
   return (
-    <div className="w-[700px] h-[700px] bg-gray-900 overflow-auto p-6 font-mono relative">
+    <div className="w-[700px] h-[700px] bg-gray-900 overflow-auto magical-scroll  p-6 font-mono relative">
       <div className="absolute inset-0 border-4 border-purple-500/30 pointer-events-none" />
       
       <div className="text-center mb-6 opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]">

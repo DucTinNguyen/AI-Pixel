@@ -105,7 +105,7 @@ const GameWindow: React.FC<GameWindowProps> = ({ game, closeGame, windowId }) =>
         </div>
 
         <div 
-          className="w-full border-x-2 border-b-2 border-[#8b98b8] bg-[#192539] overflow-y-auto"
+          className="w-full border-x-2 border-b-2 border-[#8b98b8] bg-[#192539] overflow-y-auto magical-scroll "
           style={{ 
             height: (game.height ?? 700)
           }}

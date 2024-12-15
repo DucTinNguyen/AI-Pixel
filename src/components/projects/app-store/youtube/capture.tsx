@@ -56,7 +56,7 @@ export default function SpellTranslator() {
   }
 
   return (
-    <div className="w-[700px] h-[700px] bg-indigo-950 text-purple-100 overflow-auto p-6 font-serif relative">
+    <div className="w-[700px] h-[700px] bg-indigo-950 text-purple-100 overflow-auto magical-scroll  p-6 font-serif relative">
       {/* Magical Background */}
       <div className="absolute inset-0 bg-gradient-radial from-purple-900/20 via-indigo-950 to-indigo-950" />
       

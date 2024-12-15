@@ -78,7 +78,7 @@ const SpellForge = () => {
             className="bg-gray-800/50 rounded-lg p-4 border border-amber-500/30"
           >
             <div className="text-amber-400 mb-2">{spell.name}</div>
-            <pre className="text-amber-300 overflow-auto p-2 bg-gray-900/50 rounded">
+            <pre className="text-amber-300 overflow-auto magical-scroll  p-2 bg-gray-900/50 rounded">
               <code>{spell.runes}</code>
             </pre>
           </div>

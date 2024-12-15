@@ -49,7 +49,7 @@ const AlchemicalTeamSearch = () => {
   };
 
   return (
-    <div className="w-[700px] h-[700px] bg-gray-900 overflow-auto p-6 font-mono relative">
+    <div className="w-[700px] h-[700px] bg-gray-900 overflow-auto magical-scroll  p-6 font-mono relative">
       {/* Magical Border */}
       <div className="absolute inset-0 border-4 border-indigo-500/30 pointer-events-none animate-pulse" />
       

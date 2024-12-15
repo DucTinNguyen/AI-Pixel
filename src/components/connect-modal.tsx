@@ -45,7 +45,7 @@ export default function ModalConnectWallet({
         >
           <div className="fixed inset-0 bg-black/50"></div>
         </Transition.Child>
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto magical-scroll ">
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
               transition

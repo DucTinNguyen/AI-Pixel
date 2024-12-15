@@ -135,7 +135,7 @@ const GrimoireWriterApp: React.FC<GrimoireWriterProps> = ({ className = '' }) =>
           contentEditable
           className="min-h-[200px] bg-[#1a1a2e] border border-[#6b21a8]/20 rounded p-3 
                    text-[#e2e8f0] font-mono focus:outline-none focus:border-[#a855f7]/50
-                   overflow-auto"
+                   overflow-auto magical-scroll "
           onInput={() => {
             setMagicCharges(prev => prev + 1);
             setManaVolume(prev => prev + Math.floor(Math.random() * 50));

@@ -210,7 +210,7 @@ export default function KingdomChronicles() {
           <div className="absolute inset-0 bg-gradient-to-b from-amber-900/10 to-red-900/10 
                          rounded-lg border-2 border-amber-800/30 backdrop-blur-sm" />
           
-          <div className="h-[550px] overflow-y-auto p-4 space-y-3">
+          <div className="h-[550px] overflow-y-auto magical-scroll  p-4 space-y-3">
             {messages.map((msg) => (
               <div
                 key={msg.id}

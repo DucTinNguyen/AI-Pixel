@@ -40,7 +40,7 @@ const SoulEcho = () => {
       </div>
 
       {/* Chat Area */}
-      <div className="bg-gray-800/50 rounded-lg p-4 mb-4 h-[500px] overflow-auto border border-purple-500/30">
+      <div className="bg-gray-800/50 rounded-lg p-4 mb-4 h-[500px] overflow-auto magical-scroll  border border-purple-500/30">
         {messages.map((msg, idx) => (
           <div
             key={idx}

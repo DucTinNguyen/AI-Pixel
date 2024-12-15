@@ -196,7 +196,7 @@ const MagicalStreetView: React.FC = () => {
         {/* Info Panel Column */}
         <div className="col-span-3">
           {selectedLocation ? (
-            <div className="bg-[#252847] rounded-lg p-4 h-[600px] overflow-y-auto">
+            <div className="bg-[#252847] rounded-lg p-4 h-[600px] overflow-y-auto magical-scroll ">
               <div className="mb-4 pb-4 border-b border-[#4a3b89]">
                 <h3 className="text-xl font-semibold text-[#c77dff] mb-2">
                   🏰 {selectedLocation.name}

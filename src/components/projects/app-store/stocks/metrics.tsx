@@ -90,7 +90,7 @@ export default function CrystalForecast() {
   };
 
   return (
-    <div className="h-[600px] overflow-auto bg-indigo-950 p-6 text-white">
+    <div className="h-[600px] overflow-auto magical-scroll  bg-indigo-950 p-6 text-white">
       <div className="max-w-md mx-auto">
         <h1 className="text-2xl font-bold text-center mb-8 text-purple-300">
           Crystal Market Metrics

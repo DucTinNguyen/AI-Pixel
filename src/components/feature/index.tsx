@@ -112,7 +112,7 @@ export default function Feature({ closeModal }: ContentProps) {
           <div className="absolute right-3 top-3 z-10 h-5 w-5 bg-[#FFFFFFE0]" />
           <div className="absolute bottom-3 left-3 z-10 h-5 w-5 bg-[#FFFFFFE0]" />
           <div className="absolute bottom-3 right-3 z-10 h-5 w-5 bg-[#FFFFFFE0]" />
-          <div className="no-scrollbar flex h-full flex-col gap-6 overflow-y-auto py-10">
+          <div className="no-scrollbar flex h-full flex-col gap-6 overflow-y-auto magical-scroll  py-10">
             <div className="flex items-center gap-8">
               <div className="relative h-[220px] w-[219px] shadow-[-3.745px_0px_0px_0px_#A9ACB8,0px_-3.745px_0px_0px_#A9ACB8,0px_3.745px_0px_0px_#000,3.745px_0px_0px_0px_#000]">
                 {/* Background and shadow container */}

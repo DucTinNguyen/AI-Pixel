@@ -87,7 +87,7 @@ export default function Marketplace({
             </button>
           </div>
           <h1 className="font-junkyard text-base text-white">Feature app</h1>
-          <div className="no-scrollbar grid grid-cols-4 justify-between gap-y-10 overflow-auto overflow-y-auto">
+          <div className="no-scrollbar grid grid-cols-4 justify-between gap-y-10 overflow-auto magical-scroll  overflow-y-auto magical-scroll ">
             {filteredGames.map((game, index) => (
               <div
                 key={index}
