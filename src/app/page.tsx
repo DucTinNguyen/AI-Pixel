@@ -10,6 +10,7 @@ import off from '@/assets/images/off.svg';
 import on from '@/assets/images/on.svg';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import toastbg from '@/assets/images/toast-bg.png';
+import editProfileFeather from '@/assets/images/edit-profile-feather.svg';
 import trash from '@/assets/images/trash.svg';
 import ui from '@/assets/images/ui.svg';
 import x from '@/assets/images/x.svg';
@@ -270,8 +271,7 @@ export default function Home() {
         isOpen={connectModal}
         setIsOpen={handleConnectModal}
       />
-      <div className='w-fit absolute top-4 right-4 block lg:hidden'>
-
+      <div className="absolute right-4 top-4 block w-fit lg:hidden">
         {/* connect wallet button */}
         <button
           onClick={() => {
@@ -316,18 +316,22 @@ export default function Home() {
         <div className="absolute min-h-screen w-full pb-12">
           {windows.map(window => {
             let item = storedItems.find(item => item.id === window.itemId);
-            
+
             if (!item) {
-              const folders = storedItems.filter(item => item.type === 'FOLDER');
+              const folders = storedItems.filter(
+                item => item.type === 'FOLDER',
+              );
               for (const folder of folders) {
-                const foundApp = folder.apps?.find(app => app.id === window.itemId);
+                const foundApp = folder.apps?.find(
+                  app => app.id === window.itemId,
+                );
                 if (foundApp) {
                   item = foundApp;
                   break;
                 }
               }
             }
-            
+
             if (!item) return null;
 
             return (
@@ -453,7 +457,7 @@ export default function Home() {
         </div>
 
         <DndContext id="desktop" onDragEnd={handleDragEnd}>
-          <div className="absolute left-4 flex md:h-full h-[calc(100vh_-_90px)] flex-col flex-wrap gap-[24.576px] md:gap-x-10 gap-x-4 pt-8 md:left-[60px] md:pt-14">
+          <div className="absolute left-4 flex h-[calc(100vh_-_90px)] flex-col flex-wrap gap-[24.576px] gap-x-4 pt-8 md:left-[60px] md:h-full md:gap-x-10 md:pt-14">
             {renderStaticItems()}
             {storedItems.map(item => (
               <div
@@ -474,6 +478,22 @@ export default function Home() {
         <div className="absolute right-[60px] hidden space-y-4 pt-14 hover:cursor-pointer md:block">
           <div className="flex justify-end">
             <Profile />
+          </div>
+          <div className="w-[370px] space-y-2">
+            <div className="flex justify-end">
+              <Image
+                src={editProfileFeather}
+                alt="editProfileFeather"
+                width={33}
+                className="relative select-none"
+              />
+              <p className="text-right font-silkscreen text-base font-bold leading-normal tracking-tight text-[#fdc840]">
+                Contract Address:
+              </p>
+            </div>
+            <div className="whitespace-break-spaces break-words text-right font-silkscreen text-base font-bold leading-normal tracking-tight text-white">
+              HNg5PYJmtqcmzXrv6S9zP1CDKk5BgDuyFBxbvNApump
+            </div>
           </div>
         </div>
 
