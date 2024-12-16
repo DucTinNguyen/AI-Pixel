@@ -453,7 +453,7 @@ export default function Home() {
         </div>
 
         <DndContext id="desktop" onDragEnd={handleDragEnd}>
-          <div className="absolute left-4 flex h-screen flex-col flex-wrap gap-[24.576px] gap-x-10 pt-8 md:left-[60px] md:pt-14">
+          <div className="absolute left-4 flex md:h-screen h-[calc(100vh_-_90px)] flex-col flex-wrap gap-[24.576px] md:gap-x-10 gap-x-4 pt-8 md:left-[60px] md:pt-14">
             {renderStaticItems()}
             {storedItems.map(item => (
               <div
