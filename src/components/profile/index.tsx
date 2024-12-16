@@ -1,21 +1,23 @@
 import Image from 'next/image';
 import Modal from 'react-modal';
 
+import featurebutton from '@/assets/images/feature-button.svg';
 import modalbody from '@/assets/images/modal-body-account.svg';
 import modalclose from '@/assets/images/modal-close.svg';
 import modalheader from '@/assets/images/modal-header.svg';
-import profile from '@/assets/images/profile.png';
 import profileBanner from '@/assets/images/profile-banner.svg';
 import profileBar from '@/assets/images/profile-bar.svg';
+import profile from '@/assets/images/profile.png';
 
-import ProfileTabs from './profile-tabs';
-import { motion } from 'framer-motion';
+import { useConnectStore } from '@/stores/use-modal-connect';
 import { useModalStore } from '@/stores/use-modal-store';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { motion } from 'framer-motion';
+import ModalConnectWallet from '../connect-modal';
+import ProfileTabs from './profile-tabs';
+import { shortAddress } from '@/utils/address';
 
-interface Props {
-  name: string;
-}
-export default function Profile({ name }: Props) {
+export default function Profile() {
   const customStyles = {
     overlay: {
       backgroundColor: 'rgba(39, 39, 39, 0.60)',
@@ -32,10 +34,33 @@ export default function Profile({ name }: Props) {
     },
   };
   const {profileModal,setProfileModal} = useModalStore()
-
+    const { connectModal, setConnectModal } = useConnectStore();
+  const handleConnectModal = (value: boolean) => {
+    setConnectModal(value);
+  };
+   const { publicKey } = useWallet();
   return (
     <>
-      <div className="relative h-[80px] w-[252px]">
+      {!publicKey ? (
+        <button
+          onClick={() => {
+            handleConnectModal(true);
+          }}
+          className="relative flex h-[56px] w-[220px] items-center justify-center hover:scale-95"
+        >
+          <Image
+            src={featurebutton}
+            alt="feature"
+            layout="fill"
+            objectFit="cover"
+          />
+          <span className="feature-button-title z-10 font-silkscreen">
+            Connect wallet
+          </span>
+        </button>
+      ) : (
+        <>
+          <div className="relative h-[80px] w-[252px]">
         <div
           className="hover:cursor-pointer"
           onClick={() => setProfileModal(true)}
@@ -54,9 +79,15 @@ export default function Profile({ name }: Props) {
           />
         </div>
         <p className="profile-name relative left-[90px] top-3 w-[160px] overflow-ellipsis text-white">
-          {name}
+          {shortAddress(publicKey.toString())}
         </p>
       </div>
+        </>
+      )}
+      <ModalConnectWallet
+        isOpen={connectModal}
+        setIsOpen={handleConnectModal}
+      />
 
       <Modal isOpen={profileModal} ariaHideApp={false} style={customStyles}>
         <motion.div
