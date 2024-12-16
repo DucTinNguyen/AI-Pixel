@@ -8,10 +8,27 @@ export default function Taskbar() {
   const items = useItemStore(state => state.items);
   const restoreWindow = useWindowStore(state => state.restoreWindow);
 
+  const findItem = (itemId: string) => {
+    let item = items.find(i => i.id === itemId);
+    
+    if (!item) {
+      const folders = items.filter(item => item.type === 'FOLDER');
+      for (const folder of folders) {
+        const foundApp = folder.apps?.find(app => app.id === itemId);
+        if (foundApp) {
+          item = foundApp;
+          break;
+        }
+      }
+    }
+    
+    return item;
+  };
+
   return (
     <div className="relative lg:-bottom-4 left-0 right-0 z-50 flex h-12 items-center gap-2 border-t-2 border-[#8b98b8] bg-[#192539] px-4">
       {minimizedWindows.map(window => {
-        const item = items.find(i => i.id === window.itemId);
+        const item = findItem(window.itemId);
         if (!item) return null;
 
         return (

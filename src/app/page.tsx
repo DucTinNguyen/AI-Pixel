@@ -246,16 +246,19 @@ export default function Home() {
     sounds.background.play();
   }, []);
 
-     const { publicKey } = useWallet();
+  const { publicKey } = useWallet();
   
 
   return (
     <>
+      {/* connect wallet modal - desktop view  */}
       <ModalConnectWallet
         isOpen={connectModal}
         setIsOpen={handleConnectModal}
       />
       <div className='w-fit absolute top-4 right-4 block lg:hidden'>
+
+        {/* connect wallet button */}
         <button
           onClick={() => {
             handleConnectModal(publicKey ? false : true);
@@ -298,7 +301,19 @@ export default function Home() {
 
         <div className="absolute min-h-screen w-full pb-12">
           {windows.map(window => {
-            const item = storedItems.find(item => item.id === window.itemId);
+            let item = storedItems.find(item => item.id === window.itemId);
+            
+            if (!item) {
+              const folders = storedItems.filter(item => item.type === 'FOLDER');
+              for (const folder of folders) {
+                const foundApp = folder.apps?.find(app => app.id === window.itemId);
+                if (foundApp) {
+                  item = foundApp;
+                  break;
+                }
+              }
+            }
+            
             if (!item) return null;
 
             return (
@@ -324,6 +339,7 @@ export default function Home() {
                   <Folder
                     folder={item}
                     closeFolder={() => closeWindow(window.id)}
+                    openGame={openGame}
                   />
                 )}
                 {window.type === 'GAME' && (

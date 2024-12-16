@@ -12,16 +12,24 @@ import Droppable from '../droppable';
 interface Props {
   folder: Item;
   closeFolder: () => void;
+  openGame?: (id: string) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function Folder({ folder, closeFolder, ...props }: Props) {
+export default function Folder({ folder, closeFolder, openGame, ...props }: Props) {
   const removeAppFromFolder = useItemStore(state => state.removeAppFromFolder);
   const handleDragEnd = (event: DragEndEvent) => {
     if (!event.over) {
       removeAppFromFolder(folder.id, event.active.id as string);
     }
   };
+
+  const handleDoubleClick = (app: Item) => {
+    if (app.type === 'GAME' && openGame) {
+      openGame(app.id);
+    }
+  };
+
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <Droppable id={folder?.id}>
@@ -58,7 +66,10 @@ export default function Folder({ folder, closeFolder, ...props }: Props) {
               {folder?.apps?.map(app => (
                 <div key={app.id} className="relative">
                   <Draggable id={app.id}>
-                    <div className="flex flex-col items-center justify-center gap-4">
+                    <div 
+                      className="flex flex-col items-center justify-center gap-4"
+                      onDoubleClick={() => handleDoubleClick(app)}  
+                    >
                       <Image
                         src={app.appIcon!}
                         alt={app.name}

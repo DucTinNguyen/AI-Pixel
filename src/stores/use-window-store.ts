@@ -35,16 +35,35 @@ const useWindowStore = create(
           }
         }));
       },
+      
       openGame: (id: string) => {
-        const item = useItemStore.getState().items.find(item => item.id === id);
-        if (!item || item.type !== 'GAME') return;
+        // look for item in both open desktop and folder apps 
+        let item = useItemStore.getState().items.find(item => item.id === id);
+
+        if (!item) {
+          const folders = useItemStore.getState().items.filter(item => item.type === 'FOLDER');
+
+          for (const folder of folders) {
+            const foundApp = folder.apps?.find(app => app.id === id);
+            if (foundApp) {
+              item = foundApp;
+              break;
+            }
+          }
+        }
+      
+        if (!item || item.type !== 'GAME') {
+          console.log("Item not found or not a game");
+          return;
+        }
+
+        // restore window if minimized, create new window otherwise
+      
         const windows = get().windows;
-        // Check for minimized instance first
         const minimizedWindow = windows.find(
           w => w.itemId === id && w.isMinimized
         );
         if (minimizedWindow) {
-          // Restore the minimized window instead of creating a new one
           set({
             windows: windows.map(w =>
               w.id === minimizedWindow.id
@@ -54,7 +73,7 @@ const useWindowStore = create(
           });
           return;
         }
-        // Create new window instance
+      
         const newWindow: Window = {
           id: Date.now(),
           type: 'GAME',
@@ -62,10 +81,13 @@ const useWindowStore = create(
           itemId: id,
           isMinimized: false,
         };
+
         set({
           windows: [...windows, newWindow],
         });
       },
+
+
       openFolder: (id: string) => {
         const item = useItemStore.getState().items.find(item => item.id === id);
         if (!item || item.type !== 'FOLDER') return;
