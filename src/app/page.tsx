@@ -47,22 +47,22 @@ export default function Home() {
     {
       title: 'Trash',
       icon: trash,
-      href: '/trash',
+      href: '#',
     },
     {
       title: 'Docs',
       icon: docs,
-      href: '/docs',
+      href: 'https://docs.vulcanai.app/',
     },
     {
       title: 'X',
       icon: x,
-      href: '/x',
+      href: 'x.com/vulcanaiapp',
     },
     {
       title: 'ui genius',
       icon: ui,
-      href: '/ui-genius',
+      href: '#',
     },
   ];
   const [isMuted, setIsMuted] = useState(false);
@@ -216,6 +216,11 @@ export default function Home() {
         <Link
           href={item.href}
           key={item.title}
+          target={
+            item.title === 'X' || item.title === 'Docs'
+              ? '_blank'
+              : undefined
+          }
           className="flex flex-col items-center gap-4"
         >
           <Image
