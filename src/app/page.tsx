@@ -57,7 +57,7 @@ export default function Home() {
     {
       title: 'X',
       icon: x,
-      href: 'x.com/vulcanaiapp',
+      href: 'https://x.com/vulcanaiapp',
     },
     {
       title: 'ui genius',
