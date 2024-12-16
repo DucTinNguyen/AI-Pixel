@@ -66,7 +66,7 @@ export default function Home() {
       href: '#',
     },
     {
-      title: 'Dexscreener',
+      title: 'dex screener',
       icon: dex,
       href: '#',
     },
