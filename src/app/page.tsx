@@ -405,7 +405,29 @@ export default function Home() {
                   //   setIsOpen(true);
                   //   setCurrentTab(tab.title);
                   // }
-                  return
+                    toast.custom((t: { visible: boolean }) => (
+                      <div
+                        className={` ${t.visible ? 'animate-slide-in' : 'animate-slide-out'} relative flex h-[64px] w-[390px] items-center gap-3 p-[14px]`}
+                      >
+                        <Image
+                          src={commenticon}
+                          alt="commenticon"
+                          width={45}
+                          height={28}
+                          className="z-10"
+                        />
+                        <h1 className="z-10 font-silkscreen text-base text-white">
+                          Coming soon
+                        </h1>
+                        <Image
+                          src={toastbg}
+                          alt="toastbg"
+                          layout="fill"
+                          objectFit="cover"
+                        />
+                      </div>
+                    ));
+                    return;
                 }}
               />
             ))}
