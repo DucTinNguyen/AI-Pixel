@@ -66,7 +66,7 @@ export default function Home() {
       href: '#',
     },
     {
-      title: 'Dexsreener',
+      title: 'Dexscreener',
       icon: dex,
       href: '#',
     },
@@ -223,9 +223,7 @@ export default function Home() {
           href={item.href}
           key={item.title}
           target={
-            item.title === 'X' || item.title === 'Docs'
-              ? '_blank'
-              : undefined
+            item.title === 'X' || item.title === 'Docs' ? '_blank' : undefined
           }
           className="flex flex-col items-center gap-4"
         >
@@ -236,7 +234,7 @@ export default function Home() {
             height={90}
             className="h-[50px] w-[50px] lg:h-[70px] lg:w-[70px]"
           />
-          <span className="max-w-[90px] text-center text-sm text-white md:text-lg">
+          <span className="max-w-[156px] text-center text-sm text-white md:text-lg">
             {item.title}
           </span>
         </Link>
@@ -382,40 +380,32 @@ export default function Home() {
                 isOpen={tab.title === currentTab}
                 title={tab.title}
                 onClick={() => {
-                  // if (isMobile) {
-                  //   toast.custom((t: { visible: boolean }) => (
-                  //     <div
-                  //       className={` ${t.visible ? 'animate-slide-in' : 'animate-slide-out'} relative flex h-[64px] w-[390px] items-center gap-3 p-[14px]`}
-                  //     >
-                  //       <Image
-                  //         src={commenticon}
-                  //         alt="commenticon"
-                  //         width={45}
-                  //         height={28}
-                  //         className="z-10"
-                  //       />
-                  //       <h1 className="z-10 font-silkscreen text-base text-white">
-                  //         This feature is not available on mobile
-                  //       </h1>
-                  //       <Image
-                  //         src={toastbg}
-                  //         alt="toastbg"
-                  //         layout="fill"
-                  //         objectFit="cover"
-                  //       />
-                  //     </div>
-                  //   ));
-                  //   return;
-                  // }
-                  // if (tab.title === currentTab) {
-                  //   router.push('/');
-                  //   setIsOpen(false);
-                  //   setCurrentTab(undefined);
-                  // } else {
-                  //   router.push('/');
-                  //   setIsOpen(true);
-                  //   setCurrentTab(tab.title);
-                  // }
+                  if (isMobile) {
+                    toast.custom((t: { visible: boolean }) => (
+                      <div
+                        className={` ${t.visible ? 'animate-slide-in' : 'animate-slide-out'} relative flex h-[64px] w-[390px] items-center gap-3 p-[14px]`}
+                      >
+                        <Image
+                          src={commenticon}
+                          alt="commenticon"
+                          width={45}
+                          height={28}
+                          className="z-10"
+                        />
+                        <h1 className="z-10 font-silkscreen text-base text-white">
+                          This feature is not available on mobile
+                        </h1>
+                        <Image
+                          src={toastbg}
+                          alt="toastbg"
+                          layout="fill"
+                          objectFit="cover"
+                        />
+                      </div>
+                    ));
+                    return;
+                  }
+                  if (tab.title === 'Laboratory') {
                     toast.custom((t: { visible: boolean }) => (
                       <div
                         className={` ${t.visible ? 'animate-slide-in' : 'animate-slide-out'} relative flex h-[64px] w-[390px] items-center gap-3 p-[14px]`}
@@ -439,6 +429,16 @@ export default function Home() {
                       </div>
                     ));
                     return;
+                  }
+                  if (tab.title === currentTab) {
+                    router.push('/');
+                    setIsOpen(false);
+                    setCurrentTab(undefined);
+                  } else {
+                    router.push('/');
+                    setIsOpen(true);
+                    setCurrentTab(tab.title);
+                  }
                 }}
               />
             ))}
@@ -453,7 +453,7 @@ export default function Home() {
         </div>
 
         <DndContext id="desktop" onDragEnd={handleDragEnd}>
-          <div className="absolute left-4 flex md:h-screen h-[calc(100vh_-_90px)] flex-col flex-wrap gap-[24.576px] md:gap-x-10 gap-x-4 pt-8 md:left-[60px] md:pt-14">
+          <div className="absolute left-4 flex md:h-full h-[calc(100vh_-_90px)] flex-col flex-wrap gap-[24.576px] md:gap-x-10 gap-x-4 pt-8 md:left-[60px] md:pt-14">
             {renderStaticItems()}
             {storedItems.map(item => (
               <div
