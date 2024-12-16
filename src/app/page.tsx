@@ -18,6 +18,7 @@ import Draggable from '@/components/draggable';
 import Droppable from '@/components/droppable';
 import Feature from '@/components/feature';
 import Folder from '@/components/folder';
+import dex from '@/assets/images/dex.svg';
 import Laboratory from '@/components/laboratory';
 import Marketplace from '@/components/marketplace';
 import Profile from '@/components/profile';
@@ -62,6 +63,11 @@ export default function Home() {
     {
       title: 'ui genius',
       icon: ui,
+      href: '#',
+    },
+    {
+      title: 'Dexsreener',
+      icon: dex,
       href: '#',
     },
   ];
