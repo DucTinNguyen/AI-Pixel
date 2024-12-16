@@ -26,7 +26,7 @@ export default function Taskbar() {
   };
 
   return (
-    <div className="relative lg:-bottom-4 left-0 right-0 z-50 flex h-12 items-center gap-2 border-t-2 border-[#8b98b8] bg-[#192539] px-4">
+    <div className="relative lg:-bottom-4 left-0 right-0 z-50 flex h-12 items-center gap-2 border-t-2 border-[#8b98b8] bg-[#192539] px-4 md:hidden">
       {minimizedWindows.map(window => {
         const item = findItem(window.itemId);
         if (!item) return null;

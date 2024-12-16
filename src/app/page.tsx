@@ -3,10 +3,12 @@
 import 'react-contexify/dist/ReactContexify.css';
 
 import cooking from '@/assets/gifs/cooking.gif';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import commenticon from '@/assets/images/comment-icon.png';
 import docs from '@/assets/images/docs.svg';
 import off from '@/assets/images/off.svg';
 import on from '@/assets/images/on.svg';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import toastbg from '@/assets/images/toast-bg.png';
 import trash from '@/assets/images/trash.svg';
 import ui from '@/assets/images/ui.svg';
@@ -33,6 +35,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Menu, useContextMenu } from 'react-contexify';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import toast from 'react-hot-toast';
 import Modal from 'react-modal';
 import { Rnd } from 'react-rnd';
@@ -66,6 +69,7 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentTab, setCurrentTab] = useState<string>();
   const searchParams = useSearchParams();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const feature = searchParams.get('feature');
 
@@ -229,6 +233,7 @@ export default function Home() {
     });
   }; 
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isMobile, setIsMobile] = useState(false);
 
   // Check viewport size on mount and resize
@@ -366,40 +371,41 @@ export default function Home() {
                 isOpen={tab.title === currentTab}
                 title={tab.title}
                 onClick={() => {
-                  if (isMobile) {
-                    toast.custom((t: { visible: boolean }) => (
-                      <div
-                        className={` ${t.visible ? 'animate-slide-in' : 'animate-slide-out'} relative flex h-[64px] w-[390px] items-center gap-3 p-[14px]`}
-                      >
-                        <Image
-                          src={commenticon}
-                          alt="commenticon"
-                          width={45}
-                          height={28}
-                          className="z-10"
-                        />
-                        <h1 className="z-10 font-silkscreen text-base text-white">
-                          This feature is not available on mobile
-                        </h1>
-                        <Image
-                          src={toastbg}
-                          alt="toastbg"
-                          layout="fill"
-                          objectFit="cover"
-                        />
-                      </div>
-                    ));
-                    return;
-                  }
-                  if (tab.title === currentTab) {
-                    router.push('/');
-                    setIsOpen(false);
-                    setCurrentTab(undefined);
-                  } else {
-                    router.push('/');
-                    setIsOpen(true);
-                    setCurrentTab(tab.title);
-                  }
+                  // if (isMobile) {
+                  //   toast.custom((t: { visible: boolean }) => (
+                  //     <div
+                  //       className={` ${t.visible ? 'animate-slide-in' : 'animate-slide-out'} relative flex h-[64px] w-[390px] items-center gap-3 p-[14px]`}
+                  //     >
+                  //       <Image
+                  //         src={commenticon}
+                  //         alt="commenticon"
+                  //         width={45}
+                  //         height={28}
+                  //         className="z-10"
+                  //       />
+                  //       <h1 className="z-10 font-silkscreen text-base text-white">
+                  //         This feature is not available on mobile
+                  //       </h1>
+                  //       <Image
+                  //         src={toastbg}
+                  //         alt="toastbg"
+                  //         layout="fill"
+                  //         objectFit="cover"
+                  //       />
+                  //     </div>
+                  //   ));
+                  //   return;
+                  // }
+                  // if (tab.title === currentTab) {
+                  //   router.push('/');
+                  //   setIsOpen(false);
+                  //   setCurrentTab(undefined);
+                  // } else {
+                  //   router.push('/');
+                  //   setIsOpen(true);
+                  //   setCurrentTab(tab.title);
+                  // }
+                  return
                 }}
               />
             ))}
