@@ -112,7 +112,7 @@ export default function Feature({ closeModal }: ContentProps) {
           <div className="absolute right-3 top-3 z-10 h-5 w-5 bg-[#FFFFFFE0]" />
           <div className="absolute bottom-3 left-3 z-10 h-5 w-5 bg-[#FFFFFFE0]" />
           <div className="absolute bottom-3 right-3 z-10 h-5 w-5 bg-[#FFFFFFE0]" />
-          <div className="no-scrollbar flex h-full flex-col gap-6 overflow-y-auto magical-scroll  py-10">
+          <div className="no-scrollbar magical-scroll flex h-full flex-col gap-6 overflow-y-auto py-10">
             <div className="flex items-center gap-8">
               <div className="relative h-[220px] w-[219px] shadow-[-3.745px_0px_0px_0px_#A9ACB8,0px_-3.745px_0px_0px_#A9ACB8,0px_3.745px_0px_0px_#000,3.745px_0px_0px_0px_#000]">
                 {/* Background and shadow container */}
@@ -330,7 +330,7 @@ export default function Feature({ closeModal }: ContentProps) {
                       objectFit="cover"
                     />
                     <span className="feature-button-title z-10 font-silkscreen">
-                      Download
+                      BUY $VLCN 10000
                     </span>
                   </button>
                 </div>
@@ -338,7 +338,7 @@ export default function Feature({ closeModal }: ContentProps) {
               <div className="flex min-w-[170px] flex-col items-center gap-4 px-4">
                 <div className="flex flex-col gap-1">
                   <h1 className="text-center font-silkscreen text-base font-normal text-white">
-                    Azarus rating
+                    Rating
                   </h1>
                   <span className="feature-point text-center">90/100</span>
                 </div>
@@ -369,7 +369,7 @@ export default function Feature({ closeModal }: ContentProps) {
                         />
                         <h1 className="z-10 font-silkscreen text-base text-white">
                           {/* COMMENT ADDED SUCCESSFULLY */}
-                          COMMING SOON
+                          COMING SOON
                         </h1>
                         <Image
                           src={toastbg}
