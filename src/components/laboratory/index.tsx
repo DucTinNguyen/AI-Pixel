@@ -227,7 +227,7 @@ export default function Laboratory({ closeModal }: ContentProps) {
           <div className="relative top-[60px] flex h-[524px] w-[875px] items-start justify-between px-[40px]">
             <div className="flex w-[403px] flex-col justify-between gap-6">
               <textarea
-                placeholder="GREETINGS, WELCOME TO THE Vulcan AI"
+                placeholder="Forge World with Vulcan AI"
                 value={appName}
                 onChange={e => setAppName(e.target.value)}
                 className="min-h-[349px] select-none border-[4px] border-[#8B98B8] bg-[#080F1A] p-6 font-silkscreen text-[16px] text-white placeholder-white outline-none"
